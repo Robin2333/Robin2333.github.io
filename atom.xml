@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>robin2333&#39;s Wiki</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://robin2333.github.io/"/>
+  <updated>2018-07-30T15:38:13.826Z</updated>
+  <id>https://robin2333.github.io/</id>
+  
+  <author>
+    <name>robin2333</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>差分约束系统</title>
+    <link href="https://robin2333.github.io/2018/07/30/%E5%9B%BE%E8%AE%BA/%E5%B7%AE%E5%88%86%E7%BA%A6%E6%9D%9F%E7%B3%BB%E7%BB%9F/"/>
+    <id>https://robin2333.github.io/2018/07/30/图论/差分约束系统/</id>
+    <published>2018-07-30T15:07:21.000Z</published>
+    <updated>2018-07-30T15:38:13.826Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="1-应用"><a href="#1-应用" class="headerlink" title="1.应用"></a>1.应用</h1><p>用图论的方法求解一个每个式子只有两个元的不等式组。</p><h1 id="2-求法"><a href="#2-求法" class="headerlink" title="2.求法"></a>2.求法</h1><p>之所以差分约束系统可以通过图论的最短路来解，是因为xj-xi&lt;=bk，会发现它类似最短路中的三角不等式d[v]&lt;=d[u]+w[u,v]，即d[v]-d[u]&lt;=w[u,v]。而求取最值的过程类似于最短路算法中的松弛过程。<br>那么此时问题就已经转化为一个完全的图论问题了，该图论问题的解即为原问题的解，该图论问题无解即原问题无解，易得最短路无解条件为存在负环，即原问题无解条件为存在负环。</p><h2 id="负环"><a href="#负环" class="headerlink" title="负环"></a>负环</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>是一个环，且权值和为负数。当存在负环则此图不存在最短路。</p><h3 id="找法"><a href="#找法" class="headerlink" title="找法"></a>找法</h3><p>使用spfa找<br>bfs版spfa：判定条件为一个点更新超过n次。<br>dfs版spfa：判定条件为一个点重复更新（回溯记得清标记）。<br>通常dfs比bfs快，但最坏情况下bfs更稳定。</p><h1 id="3-例题"><a href="#3-例题" class="headerlink" title="3.例题"></a>3.例题</h1><p><a href="https://www.luogu.org/problemnew/show/P1993" target="_blank" rel="noopener">小k的农场</a>（luogu）</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;1-应用&quot;&gt;&lt;a href=&quot;#1-应用&quot; class=&quot;headerlink&quot; title=&quot;1.应用&quot;&gt;&lt;/a&gt;1.应用&lt;/h1&gt;&lt;p&gt;用图论的方法求解一个每个式子只有两个元的不等式组。&lt;/p&gt;
+&lt;h1 id=&quot;2-求法&quot;&gt;&lt;a href=&quot;#2-求法&quot; cl
+      
+    
+    </summary>
+    
+      <category term="图论" scheme="https://robin2333.github.io/categories/%E5%9B%BE%E8%AE%BA/"/>
+    
+    
+      <category term="OI" scheme="https://robin2333.github.io/tags/OI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>最小生成树</title>
+    <link href="https://robin2333.github.io/2018/07/30/%E5%9B%BE%E8%AE%BA/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/"/>
+    <id>https://robin2333.github.io/2018/07/30/图论/最小生成树/</id>
+    <published>2018-07-30T15:07:21.000Z</published>
+    <updated>2018-07-30T15:32:13.947Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="1-定义"><a href="#1-定义" class="headerlink" title="1.定义"></a>1.定义</h1><p>在一给定的无向图G = (V, E) 中，(u, v) 代表连接顶点 u 与顶点 v 的边（即），而 w(u, v) 代表此边的权重，若存在 T 为 E 的子集（即）且为无循环图，使得<br>的 w(T) 最小，则此 T 为 G 的最小生成树。<br>用处例如：要在n个城市之间铺设光缆，主要目标是要使这 n 个城市的任意两个之间都可以通信，但铺设光缆的费用很高，且各个城市之间铺设光缆的费用不同，因此另一个目标是要使铺设光缆的总费用最低。这就需要找到带权的最小生成树。</p><h1 id="2-求法"><a href="#2-求法" class="headerlink" title="2.求法"></a>2.求法</h1><p>核心是贪心，每次选择最短的且目前不联通的两点间一条边建，然后标记已经联通，具体的方式是并查集。即kruskal算法。</p><h1 id="3-正确性的证明"><a href="#3-正确性的证明" class="headerlink" title="3.正确性的证明"></a>3.正确性的证明</h1><p><strong> 第一步，我们证明按照kruskal算法操作一定能得到一颗生成树。 </strong><br>假设该算法得到的不是生成树，根据树的定义，就有两种情形，第一是得到的图是有环的，第二就是得到的图是不连通的。由于算法要求每次加入边都是无环的，所以第一种情形不存在，下面就只需证明第二种情形不存在即可。<br>假设得到的图是不连通的，则至少包含两个独立的的边集，假设其中一个为E，则E中边对应的所有点都无法到达其它边集对应的点（否则，根据算法定义，相应的联系边应被加入树中），而这与原图是连通的产生矛盾，因此，第二种情形也不可能存在。得证。<br><strong> 然后，我们证明这颗生成树是最小生成树。 </strong><br>假设图有n个顶点，则生成树一定具有n-1条边.由于图的生成树个数是有限的，所以至少有一棵树具有最小代价，假设该树为U。先做出如下假设：<br>1)得到的树为T。<br>2)U和T中不同的边的条数为k,其它n-1-k条边相同，这n-1-k条边构成边集E。；<br>3)在T中而不在U中的边按代价从小到大依次为a1，a2，…，ak。<br>4)在U中而不在T中的边按代价从小到大依次为x1，x2，…，xk。<br>现在我们通过把U转换为T（把T的边依次移入U中），来证明U和T具有相同代价。<br>首先，我们将a1移入U中，由于U本身是一棵树，此时任意加一条边都构成回路，所以a1的加入必然产生一条回路，且这条回路必然包括x1，x2，…，xk中的边。（否则a1与E中的边构成回路，而E也在T中，这与T中无回路矛盾。）<br>在这个回路中删除属于x1，x2，…，xk且代价最大边xi构成一个新的生成树V。<br>假设a1代价小于xi，则V的代价小于U，这与U是最小代价树矛盾，所以a1不可能小于xi。<br>假设a1大于xi，按照Kruskal算法，首先考虑代价小的边，则执行Kruskal算法时，xi应该是在a1之前考虑，而a1又在a2，…，ak之前考虑，所以考虑xi之前，T中的边只能是E中的边，而xi既然没加入树T，就说明xi必然与E中的某些边构成回路，但xi和E又同时在U中，这与U是生成树矛盾，所以a1也不可能大于xi。<br>因此，新得到的树V与T具有相同代价。<br>依次类推，把a1，a2，…，ak的边逐渐加到U中，最终得到的树（T)与U代价相同。<br>证明结束。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;1-定义&quot;&gt;&lt;a href=&quot;#1-定义&quot; class=&quot;headerlink&quot; title=&quot;1.定义&quot;&gt;&lt;/a&gt;1.定义&lt;/h1&gt;&lt;p&gt;在一给定的无向图G = (V, E) 中，(u, v) 代表连接顶点 u 与顶点 v 的边（即），而 w(u, v) 代表此
+      
+    
+    </summary>
+    
+      <category term="图论" scheme="https://robin2333.github.io/categories/%E5%9B%BE%E8%AE%BA/"/>
+    
+    
+      <category term="OI" scheme="https://robin2333.github.io/tags/OI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>欧拉路径与欧拉回路</title>
+    <link href="https://robin2333.github.io/2018/07/30/%E5%9B%BE%E8%AE%BA/%E6%AC%A7%E6%8B%89%E8%B7%AF%E5%BE%84%E4%B8%8E%E6%AC%A7%E6%8B%89%E5%9B%9E%E8%B7%AF/"/>
+    <id>https://robin2333.github.io/2018/07/30/图论/欧拉路径与欧拉回路/</id>
+    <published>2018-07-30T15:07:21.000Z</published>
+    <updated>2018-07-30T15:38:08.362Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="1-定义"><a href="#1-定义" class="headerlink" title="1.定义"></a>1.定义</h1><p>欧拉路径：指从某一点出发，走过所有的边一次到达终点。<br>欧拉回路：是一种特殊的欧拉路径，其起点和终点重合。</p><h1 id="2-判断有无"><a href="#2-判断有无" class="headerlink" title="2.判断有无"></a>2.判断有无</h1><h2 id="第一步：检查图的连通性"><a href="#第一步：检查图的连通性" class="headerlink" title="第一步：检查图的连通性"></a>第一步：检查图的连通性</h2><p>方法有：dfs，bfs，并查集<br>推荐使用dfs，染色法，从每个点出发dfs，记联通块个数<br>注意，有向图当作无向图来跑。<br>一个trick：使用vector存无向图时，把边从0开始编号，互为相反边的挨着存，使用时找相反边用原边xor1即可。</p><h2 id="第二步：通过度数判断是否存在欧拉路径-欧拉回路"><a href="#第二步：通过度数判断是否存在欧拉路径-欧拉回路" class="headerlink" title="第二步：通过度数判断是否存在欧拉路径/欧拉回路"></a>第二步：通过度数判断是否存在欧拉路径/欧拉回路</h2><h3 id="无向图"><a href="#无向图" class="headerlink" title="无向图"></a>无向图</h3><p>对于无向图，存在欧拉回路的充分必要条件为：所有点的度数均为偶数。<br>感性理解一下：<br>必要性：因为进去多少次就要出来多少次，故必为偶数。<br>充分性：此时图可看作若干个环组合，而环视一定有欧拉回路的，故整个图有欧拉回路。<br>存在欧拉路径的充分必要条件为：所有点度数为偶数或仅存在两个点度数为基数，其余点度数为偶数。<br>因为若在这两点间连一条辅助边，由无向图欧拉回路判定条件，此图必存在欧拉回路，断掉这条边即退化为欧拉路径。</p><h3 id="有向图"><a href="#有向图" class="headerlink" title="有向图"></a>有向图</h3><p>对于有向图，存在欧拉回路的充分必要条件为：每个点的入度等于出度。<br>因为有进必有出。<br>存在欧拉路径的充分必要条件为：最多有一点入度等于出度+1，最多有一点入度等于出度-1，就会有一条从出度大于入度（没有则等于）的点出发，到达出度小于入度（没有则等于）的点的一条欧拉路径。与无向图的欧拉路径一样理解。</p><h1 id="3-找欧拉路径-欧拉回路"><a href="#3-找欧拉路径-欧拉回路" class="headerlink" title="3.找欧拉路径/欧拉回路"></a>3.找欧拉路径/欧拉回路</h1><p>前提条件：已经确定存在欧拉路径/欧拉回路<br>基本方法：dfs；<br>欧拉回路可从任意一个点开始dfs，欧拉路径从起点开始，在回溯的时候将边压入结果栈，最后按栈序输出即可。<br>主要是利用了dfs回溯的性质，不怕走死胡同，会把死胡同留到最后，相当于没有走死。<br>时间复杂度：O(nm)</p><h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><p>用一个数组记录每个点搜到了第几条边，然后从这里开始搜。<br>空间复杂度：O(n+m)</p><h1 id="4-例题"><a href="#4-例题" class="headerlink" title="4.例题"></a>4.例题</h1><p><a href="https://www.luogu.org/problemnew/show/P2731" target="_blank" rel="noopener">骑马修栅栏</a>（luogu）</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;1-定义&quot;&gt;&lt;a href=&quot;#1-定义&quot; class=&quot;headerlink&quot; title=&quot;1.定义&quot;&gt;&lt;/a&gt;1.定义&lt;/h1&gt;&lt;p&gt;欧拉路径：指从某一点出发，走过所有的边一次到达终点。&lt;br&gt;欧拉回路：是一种特殊的欧拉路径，其起点和终点重合。&lt;/p&gt;
+&lt;h
+      
+    
+    </summary>
+    
+      <category term="图论" scheme="https://robin2333.github.io/categories/%E5%9B%BE%E8%AE%BA/"/>
+    
+    
+      <category term="OI" scheme="https://robin2333.github.io/tags/OI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基本公式</title>
+    <link href="https://robin2333.github.io/2018/07/30/%E6%95%B0%E8%AE%BA/%E5%9F%BA%E6%9C%AC%E5%85%AC%E5%BC%8F/"/>
+    <id>https://robin2333.github.io/2018/07/30/数论/基本公式/</id>
+    <published>2018-07-30T15:07:21.000Z</published>
+    <updated>2018-07-30T15:43:30.503Z</updated>
+    
+    <content type="html"><![CDATA[<p>a|b b|c =&gt; a|c<br>a|b a|c =&gt; a|(b<em>x+c</em>y)<br>a|b =&gt; am|bm<br>a|n b|n gcd(a,b)=1 =&gt; ab|n<br>同余定理 </p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;a|b b|c =&amp;gt; a|c&lt;br&gt;a|b a|c =&amp;gt; a|(b&lt;em&gt;x+c&lt;/em&gt;y)&lt;br&gt;a|b =&amp;gt; am|bm&lt;br&gt;a|n b|n gcd(a,b)=1 =&amp;gt; ab|n&lt;br&gt;同余定理 &lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="数论" scheme="https://robin2333.github.io/categories/%E6%95%B0%E8%AE%BA/"/>
+    
+    
+      <category term="OI" scheme="https://robin2333.github.io/tags/OI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>exgcd</title>
+    <link href="https://robin2333.github.io/2018/07/30/%E6%95%B0%E8%AE%BA/exgcd/"/>
+    <id>https://robin2333.github.io/2018/07/30/数论/exgcd/</id>
+    <published>2018-07-30T15:07:21.000Z</published>
+    <updated>2018-07-30T15:43:26.806Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="数论" scheme="https://robin2333.github.io/categories/%E6%95%B0%E8%AE%BA/"/>
+    
+    
+      <category term="OI" scheme="https://robin2333.github.io/tags/OI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>欧拉筛</title>
+    <link href="https://robin2333.github.io/2018/07/30/%E6%95%B0%E8%AE%BA/%E6%AC%A7%E6%8B%89%E7%AD%9B/"/>
+    <id>https://robin2333.github.io/2018/07/30/数论/欧拉筛/</id>
+    <published>2018-07-30T15:07:21.000Z</published>
+    <updated>2018-07-30T15:42:35.014Z</updated>
+    
+    <content type="html"><![CDATA[<p>线性筛，复杂度为O(n)。与埃氏筛相比，不会对已经被标记过的合数再进行重复标记，故效率更高。欧拉筛将合数分解为 (最小质因数 * 一个合数) 的形式，通过最小质因数来判断当前合数是否已经被标记过。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">101</span>;   <span class="comment">// 表长</span></span><br><span class="line"><span class="keyword">int</span> prime[maxn], pNum = <span class="number">0</span>;    <span class="comment">// prime记录素数，pNum记录素数个数 </span></span><br><span class="line"><span class="keyword">bool</span> p[maxn] = &#123;<span class="literal">false</span>&#125;;        <span class="comment">// p记录当前数是否被筛去</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">eulerSieve</span><span class="params">(<span class="keyword">int</span> n)</span>    <span class="comment">// 查找记录2-n的素数</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (p[i] == <span class="literal">false</span>)  <span class="comment">// 如果未被筛过，则为素数</span></span><br><span class="line">            prime[pNum++] = i;</span><br><span class="line">        <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; pNum; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (i * prime[j] &gt; n)      <span class="comment">// 当要标记的合数超出范围时跳出</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            p[i * prime[j]] = <span class="literal">true</span>;     <span class="comment">// 将已经记录的素数的倍数进行标记</span></span><br><span class="line">            <span class="keyword">if</span> (i % prime[j] == <span class="number">0</span>)      <span class="comment">//关键步骤</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>欧拉筛的难点就在于对if (i % prime[j] == 0)这步的理解，当i是prime[j]的整数倍时，记 m = i / prime[j]，那么 i <em> prime[j+1] 就可以变为 (m </em> prime[j+1]) <em> prime[j]，这说明 i </em> prime[j+1] 是 prime[j] 的整数倍，不需要再进行标记(在之后会被 prime[j] * 某个数 标记)，对于 prime[j+2] 及之后的素数同理，直接跳出循环，这样就避免了重复标记。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;线性筛，复杂度为O(n)。与埃氏筛相比，不会对已经被标记过的合数再进行重复标记，故效率更高。欧拉筛将合数分解为 (最小质因数 * 一个合数) 的形式，通过最小质因数来判断当前合数是否已经被标记过。&lt;br&gt;&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;tabl
+      
+    
+    </summary>
+    
+      <category term="数论" scheme="https://robin2333.github.io/categories/%E6%95%B0%E8%AE%BA/"/>
+    
+    
+      <category term="OI" scheme="https://robin2333.github.io/tags/OI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>逆序对</title>
+    <link href="https://robin2333.github.io/2018/07/30/%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95/%E9%80%86%E5%BA%8F%E5%AF%B9/"/>
+    <id>https://robin2333.github.io/2018/07/30/基本算法/逆序对/</id>
+    <published>2018-07-30T15:05:13.000Z</published>
+    <updated>2018-07-30T15:35:43.146Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="1-求法"><a href="#1-求法" class="headerlink" title="1.求法"></a>1.求法</h1><h2 id="法一"><a href="#法一" class="headerlink" title="法一"></a>法一</h2><p>归并排序。<br>归并排序用到了二分的思想，在排序过程中如果a[ i ]&lt;=a[ j ]就不会产生逆序对，如果a[ i ]&gt;a[ j ]就会产生mid-i+1个逆序对，因为做归排的时候l～mid和mid+1～r都是已经排好序的所以如果a[ i ]&gt;a[ j ]那么a[ i+1 ]~a[ mid ]也就都大于a[ j ]</p><h2 id="法二"><a href="#法二" class="headerlink" title="法二"></a>法二</h2><p>树状数组。<br>首先我们只关心两个数之间的大小关系，其具体数值并不重要，所以为了方便处理，我们将输入的n个数进行离散化，即按照大小关系把a[1]到a[n]映射到1到num之间的数，为了保证原有的大小关系，其中num为不同的数字的个数。<br>这样本题的描述方式可以换为：对于a[i]求a[i]后面有多少个数比它小？于是我们可以用树状数组来解决：我们从第n个数开始倒序处理，用树状数组的方法维护一个cnt数组，其query(x)前缀和表示到当前处理的第i个数为止,映射后值在1到x之间的数一共有几个。如果a[i]映射后的值为y，那么比a[i]小的个数就等于query(y-1)对于维护，只需要在该次查询结束后再y这个位置执行树状数组的修改操作即可。<br>整个算法的复杂度为 nlongn</p><h1 id="2-应用"><a href="#2-应用" class="headerlink" title="2.应用"></a>2.应用</h1><p>1.逆序对个数=这个数后面比它小的数个数。<br>2.逆序对个数=这个数邻项交换到顺序位置时的操作次数。<br>3.可用于求平均值不小于M的子段个数（前缀和顺序对）。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;1-求法&quot;&gt;&lt;a href=&quot;#1-求法&quot; class=&quot;headerlink&quot; title=&quot;1.求法&quot;&gt;&lt;/a&gt;1.求法&lt;/h1&gt;&lt;h2 id=&quot;法一&quot;&gt;&lt;a href=&quot;#法一&quot; class=&quot;headerlink&quot; title=&quot;法一&quot;&gt;&lt;/a&gt;法一&lt;/h
+      
+    
+    </summary>
+    
+      <category term="基本算法" scheme="https://robin2333.github.io/categories/%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="OI" scheme="https://robin2333.github.io/tags/OI/"/>
+    
+  </entry>
+  
+</feed>
