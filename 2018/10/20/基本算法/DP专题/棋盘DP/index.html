@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    <title>棋盘DP | robin2333&#39;s Wiki</title>
+    
+    
+        <meta name="keywords" content="OI,DP" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="T1:最大正方形 在一个n*m的只包含0和1的矩阵里找出一个不包含0的最大正方形，输出边长。  先考虑暴力，枚举起点和边长，可以O(n^5)的解决这个问题。稍作优化（这个优化第一次看见好像还是在初赛） 采用f[i][j]表示第i行前j个元素的前缀和。这样计算一个矩阵的元素和的复杂度可以降至O(n)。总复杂度可以降至O(n^4)。 再稍微优化优化 直接计算二维矩阵前缀和，预处理的复杂度为O(n^2)">
+<meta name="keywords" content="OI,DP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="棋盘DP">
+<meta property="og:url" content="https://robin2333.github.io/2018/10/20/基本算法/DP专题/棋盘DP/index.html">
+<meta property="og:site_name" content="robin2333&#39;s Wiki">
+<meta property="og:description" content="T1:最大正方形 在一个n*m的只包含0和1的矩阵里找出一个不包含0的最大正方形，输出边长。  先考虑暴力，枚举起点和边长，可以O(n^5)的解决这个问题。稍作优化（这个优化第一次看见好像还是在初赛） 采用f[i][j]表示第i行前j个元素的前缀和。这样计算一个矩阵的元素和的复杂度可以降至O(n)。总复杂度可以降至O(n^4)。 再稍微优化优化 直接计算二维矩阵前缀和，预处理的复杂度为O(n^2)">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.loli.net/2018/09/26/5bab89cbcd43c.png">
+<meta property="og:image" content="https://i.loli.net/2018/09/26/5bab8b760377f.png">
+<meta property="og:updated_time" content="2018-10-20T15:37:48.915Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="棋盘DP">
+<meta name="twitter:description" content="T1:最大正方形 在一个n*m的只包含0和1的矩阵里找出一个不包含0的最大正方形，输出边长。  先考虑暴力，枚举起点和边长，可以O(n^5)的解决这个问题。稍作优化（这个优化第一次看见好像还是在初赛） 采用f[i][j]表示第i行前j个元素的前缀和。这样计算一个矩阵的元素和的复杂度可以降至O(n)。总复杂度可以降至O(n^4)。 再稍微优化优化 直接计算二维矩阵前缀和，预处理的复杂度为O(n^2)">
+<meta name="twitter:image" content="https://i.loli.net/2018/09/26/5bab89cbcd43c.png">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="robin2333&#39;s Wiki" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+    
+        <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">robin2333&#39;s Wiki</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Entradas',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categorias',
+            TAGS: 'Etiquetas',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id='categories'>
+        <h3 class="widget-title">
+            <span>Categorias</span>
+            &nbsp;
+            <a id='allExpand' href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            图论
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2018/07/30/图论/差分约束系统/">差分约束系统</a></li>  <li class="file"><a href="/2018/07/30/图论/最小生成树/">最小生成树</a></li>  <li class="file"><a href="/2018/07/30/图论/欧拉路径与欧拉回路/">欧拉路径与欧拉回路</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            基本算法
+                        </a>
+                         <ul class="unstyled" id="tree" > 
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            DP专题
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file active"><a href="/2018/10/20/基本算法/DP专题/棋盘DP/">棋盘DP</a></li>  <li class="file"><a href="/2018/10/20/基本算法/DP专题/背包问题/">背包问题</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/2018/10/19/基本算法/LCA/">LCA</a></li>  <li class="file"><a href="/2018/10/19/基本算法/kruskal重构树/">kruskal重构树</a></li>  <li class="file"><a href="/2018/10/18/基本算法/树上差分/">树上差分</a></li>  <li class="file"><a href="/2018/07/30/基本算法/逆序对/">逆序对</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            数论
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2018/10/18/数论/exgcd/">exgcd</a></li>  <li class="file"><a href="/2018/07/30/数论/基本公式/">基本公式</a></li>  <li class="file"><a href="/2018/07/30/数论/欧拉筛/">欧拉筛</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            题目
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2018/10/20/题目/NOIP2012开车旅行/">NOIP2012 开车旅行</a></li>  <li class="file"><a href="/2018/10/20/题目/换教室/">换教室</a></li>  <li class="file"><a href="/2018/10/20/题目/货车运输（树上倍增+kruskal+LCA）/">货车运输</a></li>  <li class="file"><a href="/2018/10/18/题目/跳石头（整数二分）/">跳石头</a></li>  <li class="file"><a href="/2018/10/18/题目/运输计划（整数二分+LCA+树上差分）/">运输计划</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-基本算法/DP专题/棋盘DP" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/基本算法/">基本算法</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/基本算法/DP专题/">DP专题</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/DP/">DP</a>, <a class="tag-link" href="/tags/OI/">OI</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/10/20/基本算法/DP专题/棋盘DP/">
+            <time datetime="2018-10-19T16:00:00.000Z" itemprop="datePublished">2018-10-20</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            棋盘DP
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">Catálogo</strong>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#T1-最大正方形"><span class="toc-number">1.</span> <span class="toc-text">T1:最大正方形</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#悬线法"><span class="toc-number">1.1.</span> <span class="toc-text">悬线法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#T2-棋盘制作"><span class="toc-number">2.</span> <span class="toc-text">T2:棋盘制作</span></a></li></ol>
+                </div>
+            
+        
+        
+            <h2 id="T1-最大正方形"><a href="#T1-最大正方形" class="headerlink" title="T1:最大正方形"></a>T1:最大正方形</h2><blockquote>
+<p>在一个n*m的只包含0和1的矩阵里找出一个不包含0的最大正方形，输出边长。</p>
+</blockquote>
+<p>先考虑暴力，枚举起点和边长，可以O(n^5)的解决这个问题。<br>稍作优化（这个优化第一次看见好像还是在初赛）</p>
+<p>采用f[i][j]表示第i行前j个元素的前缀和。这样计算一个矩阵的元素和的复杂度可以降至O(n)。总复杂度可以降至O(n^4)。</p>
+<p>再稍微优化优化</p>
+<p>直接计算二维矩阵前缀和，预处理的复杂度为O(n^2)，计算的复杂度为O(1)，总复杂度为O(n^3)。</p>
+<p>再优化</p>
+<p>对于边长其实可以不用枚举，而可以二分。明显它具有单调性。总复杂度降至O(logn*n^2)。</p>
+<p>但是！！！</p>
+<p>这些方法都不行。</p>
+<p>不是复杂度太丑，就是代码太丑，这题。。。可以DP呀。</p>
+<p>我们的时间复杂度很多浪费在了对不可能的矩形进行检查，应该意识到，只有自己是1的点才能参与构造矩形。我们只需尝试将这个点往其它方向扩展即可。考虑使用悬线法。</p>
+<h3 id="悬线法"><a href="#悬线法" class="headerlink" title="悬线法"></a>悬线法</h3><p>用途：解决给定矩阵中满足条件的最大子矩阵。</p>
+<p>做法：用一条线左右移动直到不满足约束条件或到达边界。</p>
+<p>定义这几个东西：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">left[i][j]<span class="comment">//代表从(i,j)能到达的最左位置</span></span><br><span class="line">right[i][j]<span class="comment">//代表从(i,j)能到达的最右位置</span></span><br><span class="line">up[i][j]<span class="comment">//代表从(i,j)向上扩展最长长度.</span></span><br></pre></td></tr></table></figure>
+<p>然后先进行横向扩展</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">2</span>;j&lt;=m;j++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(a[i][j]&amp;&amp;a[i][j<span class="number">-1</span>])le[i][j] = le[i][j<span class="number">-1</span>];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">	    <span class="keyword">for</span> (<span class="keyword">int</span> j=m<span class="number">-1</span>;j&gt;=<span class="number">1</span>;j--)&#123;</span><br><span class="line">			<span class="keyword">if</span>(a[i][j]&amp;&amp;a[i][j+<span class="number">1</span>])ri[i][j] = ri[i][j+<span class="number">1</span>];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>再纵向扩展</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=m;j++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(a[i][j]&amp;&amp;a[i<span class="number">-1</span>][j])&#123;</span><br><span class="line">			le[i][j] = max(le[i][j],le[i<span class="number">-1</span>][j]);</span><br><span class="line">			ri[i][j] = min(ri[i][j],ri[i<span class="number">-1</span>][j]);</span><br><span class="line">			up[i][j] = up[i<span class="number">-1</span>][j]+<span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>最后统计答案</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=m;j++)&#123;</span><br><span class="line">			<span class="keyword">int</span> c = ri[i][j]-le[i][j]+<span class="number">1</span>;</span><br><span class="line">			<span class="keyword">int</span> b = min(c,up[i][j]);</span><br><span class="line">			ans = max(ans,b);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>但是考虑这样一种情况。</p>
+<p>按照我们的状态转移方程，我们求出的是黑色部分的面积。但若红色部分的面积更大我们岂不是漏解了？</p>
+<p><img src="https://i.loli.net/2018/09/26/5bab89cbcd43c.png" alt="img"></p>
+<p>不是的，红色部分的面积会被蓝色left，right数组还未更新的地方更新。</p>
+<p><img src="https://i.loli.net/2018/09/26/5bab8b760377f.png" alt="img"></p>
+<p>但是这题还可以优化。因为悬线法可以针对所有矩形，而此题只需正方形。所以我们不选择横向和纵向扩展，而是直接斜着扩展，<strong>这也是正方形棋盘dp中的常用方法</strong>。</p>
+<p>定义f[i][j]表示以节点i,j为右下角，可构成的最大正方形的边长。</p>
+<p>只有a[i][j]==1时，节点i,j才能作为正方形的右下角；</p>
+<p>对于一个已经确定的f[i][j]=x，它表明包括节点i，j在内向上x个节点，向左x个节点扫过的正方形中所有a值都为1。</p>
+<p>那么易得状态转移方程</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (a[i][j]==<span class="number">1</span>) f[i][j]=min(min(f[i][j<span class="number">-1</span>],f[i<span class="number">-1</span>][j]),f[i<span class="number">-1</span>][j<span class="number">-1</span>])+<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>完成后在所有f[i][j]中取max即可。</p>
+<h2 id="T2-棋盘制作"><a href="#T2-棋盘制作" class="headerlink" title="T2:棋盘制作"></a>T2:棋盘制作</h2><blockquote>
+<p>国际象棋是世界上最古老的博弈游戏之一，和中国的围棋、象棋以及日本的将棋同享盛名。据说国际象棋起源于易经的思想，棋盘是一个8×8大小的黑白相间的方阵，对应八八六十四卦，黑白对应阴阳。</p>
+<p>而我们的主人公<code>小Q</code>，正是国际象棋的狂热爱好者。作为一个顶尖高手，他已不满足于普通的棋盘与规则，于是他跟他的好朋友<code>小W</code>决定将棋盘扩大以适应他们的新规则。</p>
+<p><code>小Q</code>找到了一张由N×M个正方形的格子组成的矩形纸片，每个格子被涂有黑白两种颜色之一。<code>小Q</code>想在这种纸中裁减一部分作为新棋盘，当然，他希望这个棋盘尽可能的大。</p>
+<p>不过<code>小Q</code>还没有决定是找一个正方形的棋盘还是一个矩形的棋盘（当然，不管哪种，棋盘必须都黑白相间，即相邻的格子不同色），所以他希望可以找到最大的正方形棋盘面积和最大的矩形棋盘面积，从而决定哪个更好一些。</p>
+<p>于是<code>小Q</code>找到了即将参加全国信息学竞赛的你，你能帮助他么？</p>
+</blockquote>
+<p>悬线法秒掉即可。</p>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/2018/10/20/基本算法/DP专题/背包问题/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Más nuevo</strong>
+            <div class="article-nav-title">
+                
+                    背包问题
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/10/20/题目/NOIP2012开车旅行/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Más viejo</strong>
+            <div class="article-nav-title">NOIP2012 开车旅行</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            robin2333 &copy; 2018 
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png" /></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

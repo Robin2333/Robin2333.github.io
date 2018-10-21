@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    <title>exgcd | robin2333&#39;s Wiki</title>
+    
+    
+        <meta name="keywords" content="OI,数论" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="exgcd&amp;amp;逆元简介用于求方程形如　ax + by = gcd(a,b) 的一个特解（亦可用此解推出所有解）。 算法递归求解，其实本质是用方程 bx +  (a mod b)y = gcd(b,a mod b) 的解递推出方程 ay0 + bx0 = gcd(a,b) 的解。具体递推关系为 x0 = y, y0 = x - a/b*y 递归的边界条件为当a mod b递归至0，则必有gcd">
+<meta name="keywords" content="OI,数论">
+<meta property="og:type" content="article">
+<meta property="og:title" content="exgcd">
+<meta property="og:url" content="https://robin2333.github.io/2018/10/18/数论/exgcd/index.html">
+<meta property="og:site_name" content="robin2333&#39;s Wiki">
+<meta property="og:description" content="exgcd&amp;amp;逆元简介用于求方程形如　ax + by = gcd(a,b) 的一个特解（亦可用此解推出所有解）。 算法递归求解，其实本质是用方程 bx +  (a mod b)y = gcd(b,a mod b) 的解递推出方程 ay0 + bx0 = gcd(a,b) 的解。具体递推关系为 x0 = y, y0 = x - a/b*y 递归的边界条件为当a mod b递归至0，则必有gcd">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-10-20T15:35:06.465Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="exgcd">
+<meta name="twitter:description" content="exgcd&amp;amp;逆元简介用于求方程形如　ax + by = gcd(a,b) 的一个特解（亦可用此解推出所有解）。 算法递归求解，其实本质是用方程 bx +  (a mod b)y = gcd(b,a mod b) 的解递推出方程 ay0 + bx0 = gcd(a,b) 的解。具体递推关系为 x0 = y, y0 = x - a/b*y 递归的边界条件为当a mod b递归至0，则必有gcd">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="robin2333&#39;s Wiki" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+    
+        <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">robin2333&#39;s Wiki</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Entradas',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categorias',
+            TAGS: 'Etiquetas',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id='categories'>
+        <h3 class="widget-title">
+            <span>Categorias</span>
+            &nbsp;
+            <a id='allExpand' href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            图论
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2018/07/30/图论/差分约束系统/">差分约束系统</a></li>  <li class="file"><a href="/2018/07/30/图论/最小生成树/">最小生成树</a></li>  <li class="file"><a href="/2018/07/30/图论/欧拉路径与欧拉回路/">欧拉路径与欧拉回路</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            基本算法
+                        </a>
+                         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            DP专题
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2018/10/20/基本算法/DP专题/棋盘DP/">棋盘DP</a></li>  <li class="file"><a href="/2018/10/20/基本算法/DP专题/背包问题/">背包问题</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/2018/10/19/基本算法/LCA/">LCA</a></li>  <li class="file"><a href="/2018/10/19/基本算法/kruskal重构树/">kruskal重构树</a></li>  <li class="file"><a href="/2018/10/18/基本算法/树上差分/">树上差分</a></li>  <li class="file"><a href="/2018/07/30/基本算法/逆序对/">逆序对</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            数论
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file active"><a href="/2018/10/18/数论/exgcd/">exgcd</a></li>  <li class="file"><a href="/2018/07/30/数论/基本公式/">基本公式</a></li>  <li class="file"><a href="/2018/07/30/数论/欧拉筛/">欧拉筛</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            题目
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2018/10/20/题目/NOIP2012开车旅行/">NOIP2012 开车旅行</a></li>  <li class="file"><a href="/2018/10/20/题目/换教室/">换教室</a></li>  <li class="file"><a href="/2018/10/20/题目/货车运输（树上倍增+kruskal+LCA）/">货车运输</a></li>  <li class="file"><a href="/2018/10/18/题目/跳石头（整数二分）/">跳石头</a></li>  <li class="file"><a href="/2018/10/18/题目/运输计划（整数二分+LCA+树上差分）/">运输计划</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-数论/exgcd" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/数论/">数论</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/OI/">OI</a>, <a class="tag-link" href="/tags/数论/">数论</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/10/18/数论/exgcd/">
+            <time datetime="2018-10-17T16:00:00.000Z" itemprop="datePublished">2018-10-18</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            exgcd
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">Catálogo</strong>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#exgcd-amp-逆元"><span class="toc-number">1.</span> <span class="toc-text">exgcd&amp;逆元</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">1.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#算法"><span class="toc-number">1.2.</span> <span class="toc-text">算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#下面考虑求其它解"><span class="toc-number">1.2.1.</span> <span class="toc-text">下面考虑求其它解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#下面考虑将方程中的-gcd-a-b-推广至任意整数c"><span class="toc-number">1.2.2.</span> <span class="toc-text">下面考虑将方程中的 gcd(a,b)推广至任意整数c</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#应用"><span class="toc-number">1.3.</span> <span class="toc-text">应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#求逆元"><span class="toc-number">1.3.1.</span> <span class="toc-text">求逆元</span></a></li></ol></li></ol></li></ol>
+                </div>
+            
+        
+        
+            <h1 id="exgcd-amp-逆元"><a href="#exgcd-amp-逆元" class="headerlink" title="exgcd&amp;逆元"></a>exgcd&amp;逆元</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>用于求方程形如　ax + by = gcd(a,b) 的一个特解（亦可用此解推出所有解）。</p>
+<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><p>递归求解，其实本质是用方程</p>
+<p>bx +  (a mod b)y = gcd(b,a mod b)</p>
+<p>的解递推出方程</p>
+<p>ay0 + bx0 = gcd(a,b)</p>
+<p>的解。具体递推关系为</p>
+<p>x0 = y, y0 = x - a/b*y</p>
+<p>递归的边界条件为当a mod b递归至0，则必有gcd(a,b)=b，则此时方程为</p>
+<p>bx = b</p>
+<p>则x=1，y为任意值，不妨设它为0.</p>
+<p>递推关系的证明很显然，直接将模的形式化为除的形式（a mod b = a - a/b*b），然后以a，b为主元变形后将a，b的系数直接相等，即可得到递推关系。</p>
+<h3 id="下面考虑求其它解"><a href="#下面考虑求其它解" class="headerlink" title="下面考虑求其它解"></a>下面考虑求其它解</h3><p>设已知一个解(x0,y0)，欲求解(x,y)，则由定义</p>
+<p>ax0 + by0 = gcd(a,b) = ax + by</p>
+<p>简单变形得</p>
+<p>a(x - x0) = b(y0 - y)</p>
+<p> 由定义，必有</p>
+<p>gcd(a,b) |  a ，gcd(a,b) | b</p>
+<p>则两边同除以gcd(a,b)得</p>
+<p>a’(x - x0) = b’(y0 - y)</p>
+<p>其中a’与b’互质，则必有</p>
+<p>b’ | (x - x0)，a’ | (y0 - y)</p>
+<p>则两边同除以b’，得</p>
+<p>a’k = y0 - y</p>
+<p>y = y0 - a’k</p>
+<p>又有</p>
+<p>b’k = x - x0</p>
+<p>x = x0 + b’k</p>
+<p>则其它解为(x0 + b’k , y0 - a’k)其中k可取任何整数。</p>
+<h3 id="下面考虑将方程中的-gcd-a-b-推广至任意整数c"><a href="#下面考虑将方程中的-gcd-a-b-推广至任意整数c" class="headerlink" title="下面考虑将方程中的 gcd(a,b)推广至任意整数c"></a>下面考虑将方程中的 gcd(a,b)推广至任意整数c</h3><p>即ax + by = c</p>
+<p>首先，这个方程不一定 有解，方程有解条件为</p>
+<p>gcd(a,b) | c</p>
+<p>且这是一个充分必要条件。</p>
+<p>证明如下</p>
+<p>gcd(a,b) | a , gcd(a,b) | b</p>
+<p>gcd(a,b) | (ax + by)</p>
+<p>所以必有</p>
+<p>gcd(a,b) | c</p>
+<p>才能使方程有解且必有解。</p>
+<p>注意到，此方程要么无解，要么有无数解。</p>
+<p>tip：观察这个方程的形式，它也是一个直线方程，方程有解的意义便是该直线过整点。</p>
+<p>下面考虑有解情况下解的求法，因为</p>
+<p>gcd(a,b) | c</p>
+<p>设</p>
+<p>c = k*gcd(a,b)</p>
+<p>然后可以先求方程</p>
+<p>ax + by = gcd(a,b)</p>
+<p>的解(x0,y0)</p>
+<p>则易得原方程解为(kx0,ky0)</p>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><h3 id="求逆元"><a href="#求逆元" class="headerlink" title="求逆元"></a>求逆元</h3><p>即求a在mod p剩余系下的逆元x</p>
+<p>则ax = 1(mod p)</p>
+<p>即ax - 1 = kp</p>
+<p>ax - kp = 1</p>
+<p>按前面方程的形式判断有解以及求解即可</p>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/2018/10/18/题目/跳石头（整数二分）/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Más nuevo</strong>
+            <div class="article-nav-title">
+                
+                    跳石头
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/07/30/图论/差分约束系统/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Más viejo</strong>
+            <div class="article-nav-title">差分约束系统</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            robin2333 &copy; 2018 
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png" /></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

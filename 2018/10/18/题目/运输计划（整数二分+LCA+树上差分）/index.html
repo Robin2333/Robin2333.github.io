@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    <title>运输计划 | robin2333&#39;s Wiki</title>
+    
+    
+        <meta name="keywords" content="OI,图论,树,NOIP原题,LCA,整数二分,树上差分" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="公元20442044 年，人类进入了宇宙纪元。 L 国有 nn 个星球，还有 n-1n−1 条双向航道，每条航道建立在两个星球之间，这 n-1n−1 条航道连通了 LL 国的所有星球。 小 P 掌管一家物流公司， 该公司有很多个运输计划，每个运输计划形如：有一艘物流飞船需要从 u_iui 号星球沿最快的宇航路径飞行到 v_ivi 号星球去。显然，飞船驶过一条航道是需要时间的，对于航道 jj，任意">
+<meta name="keywords" content="OI,图论,树,NOIP原题,LCA,整数二分,树上差分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="运输计划">
+<meta property="og:url" content="https://robin2333.github.io/2018/10/18/题目/运输计划（整数二分+LCA+树上差分）/index.html">
+<meta property="og:site_name" content="robin2333&#39;s Wiki">
+<meta property="og:description" content="公元20442044 年，人类进入了宇宙纪元。 L 国有 nn 个星球，还有 n-1n−1 条双向航道，每条航道建立在两个星球之间，这 n-1n−1 条航道连通了 LL 国的所有星球。 小 P 掌管一家物流公司， 该公司有很多个运输计划，每个运输计划形如：有一艘物流飞船需要从 u_iui 号星球沿最快的宇航路径飞行到 v_ivi 号星球去。显然，飞船驶过一条航道是需要时间的，对于航道 jj，任意">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-10-20T15:40:06.659Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="运输计划">
+<meta name="twitter:description" content="公元20442044 年，人类进入了宇宙纪元。 L 国有 nn 个星球，还有 n-1n−1 条双向航道，每条航道建立在两个星球之间，这 n-1n−1 条航道连通了 LL 国的所有星球。 小 P 掌管一家物流公司， 该公司有很多个运输计划，每个运输计划形如：有一艘物流飞船需要从 u_iui 号星球沿最快的宇航路径飞行到 v_ivi 号星球去。显然，飞船驶过一条航道是需要时间的，对于航道 jj，任意">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="robin2333&#39;s Wiki" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+    
+        <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">robin2333&#39;s Wiki</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Entradas',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categorias',
+            TAGS: 'Etiquetas',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id='categories'>
+        <h3 class="widget-title">
+            <span>Categorias</span>
+            &nbsp;
+            <a id='allExpand' href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            图论
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2018/07/30/图论/差分约束系统/">差分约束系统</a></li>  <li class="file"><a href="/2018/07/30/图论/最小生成树/">最小生成树</a></li>  <li class="file"><a href="/2018/07/30/图论/欧拉路径与欧拉回路/">欧拉路径与欧拉回路</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            基本算法
+                        </a>
+                         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            DP专题
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2018/10/20/基本算法/DP专题/棋盘DP/">棋盘DP</a></li>  <li class="file"><a href="/2018/10/20/基本算法/DP专题/背包问题/">背包问题</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/2018/10/19/基本算法/LCA/">LCA</a></li>  <li class="file"><a href="/2018/10/19/基本算法/kruskal重构树/">kruskal重构树</a></li>  <li class="file"><a href="/2018/10/18/基本算法/树上差分/">树上差分</a></li>  <li class="file"><a href="/2018/07/30/基本算法/逆序对/">逆序对</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            数论
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2018/10/18/数论/exgcd/">exgcd</a></li>  <li class="file"><a href="/2018/07/30/数论/基本公式/">基本公式</a></li>  <li class="file"><a href="/2018/07/30/数论/欧拉筛/">欧拉筛</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            题目
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2018/10/20/题目/NOIP2012开车旅行/">NOIP2012 开车旅行</a></li>  <li class="file"><a href="/2018/10/20/题目/换教室/">换教室</a></li>  <li class="file"><a href="/2018/10/20/题目/货车运输（树上倍增+kruskal+LCA）/">货车运输</a></li>  <li class="file"><a href="/2018/10/18/题目/跳石头（整数二分）/">跳石头</a></li>  <li class="file active"><a href="/2018/10/18/题目/运输计划（整数二分+LCA+树上差分）/">运输计划</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-题目/运输计划（整数二分+LCA+树上差分）" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/题目/">题目</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/LCA/">LCA</a>, <a class="tag-link" href="/tags/NOIP原题/">NOIP原题</a>, <a class="tag-link" href="/tags/OI/">OI</a>, <a class="tag-link" href="/tags/图论/">图论</a>, <a class="tag-link" href="/tags/整数二分/">整数二分</a>, <a class="tag-link" href="/tags/树/">树</a>, <a class="tag-link" href="/tags/树上差分/">树上差分</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/10/18/题目/运输计划（整数二分+LCA+树上差分）/">
+            <time datetime="2018-10-17T16:00:00.000Z" itemprop="datePublished">2018-10-18</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            运输计划
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">Catálogo</strong>
+                    
+                </div>
+            
+        
+        
+            <blockquote>
+<p>公元20442044 年，人类进入了宇宙纪元。</p>
+<p>L 国有 nn 个星球，还有 n-1n−1 条双向航道，每条航道建立在两个星球之间，这 n-1n−1 条航道连通了 LL 国的所有星球。</p>
+<p>小 P 掌管一家物流公司， 该公司有很多个运输计划，每个运输计划形如：有一艘物流飞船需要从 u_iui 号星球沿最快的宇航路径飞行到 v_ivi 号星球去。显然，飞船驶过一条航道是需要时间的，对于航道 jj，任意飞船驶过它所花费的时间为 t_jtj，并且任意两艘飞船之间不会产生任何干扰。</p>
+<p>为了鼓励科技创新， LL 国国王同意小 PP 的物流公司参与 LL 国的航道建设，即允许小PP 把某一条航道改造成虫洞，飞船驶过虫洞不消耗时间。</p>
+<p>在虫洞的建设完成前小 P 的物流公司就预接了 mm 个运输计划。在虫洞建设完成后，这 mm 个运输计划会同时开始，所有飞船一起出发。当这 mm 个运输计划都完成时，小 PP 的物流公司的阶段性工作就完成了。</p>
+<p>如果小 PP 可以自由选择将哪一条航道改造成虫洞， 试求出小 PP 的物流公司完成阶段性工作所需要的最短时间是多少？</p>
+</blockquote>
+<p>有n个点，n-1条边的连通图，这必然是一棵树。</p>
+<p>注意到所有运输计划是同时开始的，这意味着我们需要使这些运输计划需要的时间的最大值最小。看到这个问题的形式，容易联想到二分答案。</p>
+<p>明显的，这个问题具有单调性，满足二分条件。因为如果时间可以是t，那么一定可以是大于t，如果时间不能是t，一定不能是小于t。</p>
+<p>再来考虑判断函数的设计。我们需要判断时间为t时，所有运输计划是否可以完成。最朴素的方法是枚举每条航道通过的所有边，删掉之后再跑一次所有航道，看是否可行。</p>
+<p>但是有一个明显的优化，即考虑删掉一条边对我们的收益，明显的，它被覆盖的次数越多，以及它越长，那么把它删掉我们的收益越大。但是不能直接贪心，因为这样只能让和最小，而不能让最大值最小。此时二分的优势就体现出来了，我们只用判断可不可行，而不用得到最优解。所以我们可以把路径长度大于t的单独拿出来考虑。</p>
+<p>如果不存在路径长度大于t的路径，则一定可行。</p>
+<p>如果所有路径长度大于t的路径没有一个公共边，则一定不可行。因为我们只能删掉一条边。如果它们没有一个公共边，则删完之后一定还存在长度大于t的路径。</p>
+<p>如果存在公共边，我们取这些边中长度最大的，删掉。（前面讨论过，这种删法对我们最有利）。再考虑大于t的路径中长度最大的再删完这条边后是否合法，若合法，则方案合法，若不合法，则方案不合法。</p>
+<p>算法大致已经设计完成，我们来看看其中具体的实现细节。</p>
+<p>对于路径求交，我们可以使用树上差分来实现。</p>
+<p>对于路径求长度，可以使用LCA来实现。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">300050</span>;</span><br><span class="line"><span class="keyword">int</span> n,m;</span><br><span class="line"><span class="keyword">int</span> sumw;</span><br><span class="line"><span class="keyword">int</span> x,y,c;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">edge</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> v,w;</span><br><span class="line">	edge(<span class="keyword">int</span> a=<span class="number">0</span>,<span class="keyword">int</span> b=<span class="number">0</span>)&#123;</span><br><span class="line">		v=a;w=b;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">int</span> dep[maxn];</span><br><span class="line"><span class="keyword">int</span> f[maxn][<span class="number">24</span>];</span><br><span class="line"><span class="built_in">vector</span> &lt;edge&gt; g[maxn];</span><br><span class="line"><span class="keyword">int</span> d[maxn];</span><br><span class="line"><span class="keyword">int</span> cf[maxn];</span><br><span class="line"><span class="keyword">int</span> num[maxn];</span><br><span class="line"><span class="keyword">int</span> numm;</span><br><span class="line"><span class="keyword">int</span> dr[maxn];</span><br><span class="line"><span class="keyword">int</span> le,ri;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">lian</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> u,v;</span><br><span class="line">	<span class="keyword">int</span> dis,root;</span><br><span class="line">	lian(<span class="keyword">int</span> a=<span class="number">0</span>,<span class="keyword">int</span> b=<span class="number">0</span>,<span class="keyword">int</span> c=<span class="number">0</span>,<span class="keyword">int</span> d=<span class="number">0</span>)&#123;</span><br><span class="line">		u=a;v=b;dis=d;root=c;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">lian l[maxn];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> u,<span class="keyword">int</span> fa)</span></span>&#123;</span><br><span class="line">	<span class="comment">//这里求一下dfs序 </span></span><br><span class="line">	numm++;</span><br><span class="line">	num[numm]=u;  <span class="comment">//这里 </span></span><br><span class="line">	<span class="comment">//这里求一下深度 </span></span><br><span class="line">	dep[u] = dep[fa] + <span class="number">1</span>;</span><br><span class="line">	<span class="comment">//以下为标准lca预处理 </span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=<span class="number">22</span>;i++)&#123;</span><br><span class="line">		f[u][i+<span class="number">1</span>] = f[f[u][i]][i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;g[u].size();i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(fa==g[u][i].v)<span class="keyword">continue</span>;</span><br><span class="line">		<span class="comment">//这里一行代码求到根距离 </span></span><br><span class="line">		dr[g[u][i].v]=dr[u]+g[u][i].w;</span><br><span class="line">		f[g[u][i].v][<span class="number">0</span>] = u;</span><br><span class="line">		dfs(g[u][i].v,u);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lca</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(dep[x]&lt;dep[y])swap(x,y);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">23</span>;i&gt;=<span class="number">0</span>;i--)&#123;</span><br><span class="line">		<span class="keyword">if</span>(dep[f[x][i]]&gt;=dep[y])x = f[x][i];</span><br><span class="line">		<span class="keyword">if</span>(x==y)<span class="keyword">return</span> x;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">23</span>;i&gt;=<span class="number">0</span>;i--)&#123;</span><br><span class="line">		<span class="keyword">if</span>(f[x][i]!=f[y][i])&#123;</span><br><span class="line">	        x = f[x][i];y = f[y][i];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> f[x][<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">jg</span><span class="params">(<span class="keyword">int</span> t)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> cnt=<span class="number">0</span>;<span class="keyword">int</span> ans=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">memset</span>(cf,<span class="number">0</span>,<span class="keyword">sizeof</span>(cf));</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)&#123;</span><br><span class="line">	    <span class="keyword">if</span>(l[i].dis&gt;t)&#123;</span><br><span class="line">	 		cf[l[i].u]+=<span class="number">1</span>;</span><br><span class="line">	 		cf[l[i].v]+=<span class="number">1</span>;</span><br><span class="line">	 		cf[l[i].root]-=<span class="number">2</span>;</span><br><span class="line">	 		cnt++;</span><br><span class="line">	 		ans = max(ans,l[i].dis-t);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(cnt==<span class="number">0</span>)<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=n;i&gt;=<span class="number">1</span>;i--)</span><br><span class="line">	cf[f[num[i]][<span class="number">0</span>]]+=cf[num[i]];</span><br><span class="line">	<span class="comment">//注意这里是2</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i++)</span><br><span class="line">	<span class="keyword">if</span>(cf[i]==cnt&amp;&amp;dr[i]-dr[f[i][<span class="number">0</span>]]&gt;=ans)<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;n,&amp;m);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n<span class="number">-1</span>;i++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d%d%d"</span>,&amp;x,&amp;y,&amp;c);</span><br><span class="line">		g[x].push_back(edge(y,c));</span><br><span class="line">		g[y].push_back(edge(x,c));</span><br><span class="line">		sumw += c;</span><br><span class="line">	&#125;</span><br><span class="line">	dfs(<span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)&#123;</span><br><span class="line">    	<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;x,&amp;y);</span><br><span class="line">    	l[i] = lian(x,y,lca(x,y),dr[x]+dr[y]<span class="number">-2</span>*dr[lca(x,y)]);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	le=<span class="number">0</span>;ri=sumw+<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span> (le&lt;ri)&#123;</span><br><span class="line">		<span class="keyword">int</span> mid = (le+ri)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span>(jg(mid))ri=mid;</span><br><span class="line">		<span class="keyword">else</span> le=mid+<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d"</span>,le);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/2018/10/18/基本算法/树上差分/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Más nuevo</strong>
+            <div class="article-nav-title">
+                
+                    树上差分
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/10/18/题目/跳石头（整数二分）/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Más viejo</strong>
+            <div class="article-nav-title">跳石头</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            robin2333 &copy; 2018 
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png" /></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

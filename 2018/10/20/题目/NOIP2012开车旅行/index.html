@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    <title>NOIP2012 开车旅行 | robin2333&#39;s Wiki</title>
+    
+    
+        <meta name="keywords" content="OI,图论,排序,倍增" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="拿到这道题应该很容易想到排序。关键是如何处理排序之后原序中只能往右走这个信息。 考虑这样做，在排序好的数组中，离一个点i最近和次进的一定在i-1,i-2,i+1,i+2中。只用处理这四个即可。问题是如何使序合法。 有一种优雅的解法是在排好序的数组中找到原序为1的点，处理好离他最近和次近的点。这样处理出的一定是合法的，因为数组中不存在比它还左的点。处理完后删掉这个点，这样第二个点就变成数组中最左的点">
+<meta name="keywords" content="OI,图论,排序,倍增">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NOIP2012 开车旅行">
+<meta property="og:url" content="https://robin2333.github.io/2018/10/20/题目/NOIP2012开车旅行/index.html">
+<meta property="og:site_name" content="robin2333&#39;s Wiki">
+<meta property="og:description" content="拿到这道题应该很容易想到排序。关键是如何处理排序之后原序中只能往右走这个信息。 考虑这样做，在排序好的数组中，离一个点i最近和次进的一定在i-1,i-2,i+1,i+2中。只用处理这四个即可。问题是如何使序合法。 有一种优雅的解法是在排好序的数组中找到原序为1的点，处理好离他最近和次近的点。这样处理出的一定是合法的，因为数组中不存在比它还左的点。处理完后删掉这个点，这样第二个点就变成数组中最左的点">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-10-20T15:38:13.972Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NOIP2012 开车旅行">
+<meta name="twitter:description" content="拿到这道题应该很容易想到排序。关键是如何处理排序之后原序中只能往右走这个信息。 考虑这样做，在排序好的数组中，离一个点i最近和次进的一定在i-1,i-2,i+1,i+2中。只用处理这四个即可。问题是如何使序合法。 有一种优雅的解法是在排好序的数组中找到原序为1的点，处理好离他最近和次近的点。这样处理出的一定是合法的，因为数组中不存在比它还左的点。处理完后删掉这个点，这样第二个点就变成数组中最左的点">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="robin2333&#39;s Wiki" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+    
+        <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">robin2333&#39;s Wiki</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Entradas',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categorias',
+            TAGS: 'Etiquetas',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id='categories'>
+        <h3 class="widget-title">
+            <span>Categorias</span>
+            &nbsp;
+            <a id='allExpand' href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            图论
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2018/07/30/图论/差分约束系统/">差分约束系统</a></li>  <li class="file"><a href="/2018/07/30/图论/最小生成树/">最小生成树</a></li>  <li class="file"><a href="/2018/07/30/图论/欧拉路径与欧拉回路/">欧拉路径与欧拉回路</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            基本算法
+                        </a>
+                         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            DP专题
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2018/10/20/基本算法/DP专题/棋盘DP/">棋盘DP</a></li>  <li class="file"><a href="/2018/10/20/基本算法/DP专题/背包问题/">背包问题</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/2018/10/19/基本算法/LCA/">LCA</a></li>  <li class="file"><a href="/2018/10/19/基本算法/kruskal重构树/">kruskal重构树</a></li>  <li class="file"><a href="/2018/10/18/基本算法/树上差分/">树上差分</a></li>  <li class="file"><a href="/2018/07/30/基本算法/逆序对/">逆序对</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            数论
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2018/10/18/数论/exgcd/">exgcd</a></li>  <li class="file"><a href="/2018/07/30/数论/基本公式/">基本公式</a></li>  <li class="file"><a href="/2018/07/30/数论/欧拉筛/">欧拉筛</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            题目
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file active"><a href="/2018/10/20/题目/NOIP2012开车旅行/">NOIP2012 开车旅行</a></li>  <li class="file"><a href="/2018/10/20/题目/换教室/">换教室</a></li>  <li class="file"><a href="/2018/10/20/题目/货车运输（树上倍增+kruskal+LCA）/">货车运输</a></li>  <li class="file"><a href="/2018/10/18/题目/跳石头（整数二分）/">跳石头</a></li>  <li class="file"><a href="/2018/10/18/题目/运输计划（整数二分+LCA+树上差分）/">运输计划</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-题目/NOIP2012开车旅行" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/题目/">题目</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/OI/">OI</a>, <a class="tag-link" href="/tags/倍增/">倍增</a>, <a class="tag-link" href="/tags/图论/">图论</a>, <a class="tag-link" href="/tags/排序/">排序</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/10/20/题目/NOIP2012开车旅行/">
+            <time datetime="2018-10-19T16:00:00.000Z" itemprop="datePublished">2018-10-20</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            NOIP2012 开车旅行
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">Catálogo</strong>
+                    
+                </div>
+            
+        
+        
+            <p>拿到这道题应该很容易想到排序。关键是如何处理排序之后原序中只能往右走这个信息。</p>
+<p>考虑这样做，在排序好的数组中，离一个点i最近和次进的一定在i-1,i-2,i+1,i+2中。只用处理这四个即可。问题是如何使序合法。</p>
+<p>有一种优雅的解法是在排好序的数组中找到<strong>原序</strong>为1的点，处理好离他最近和次近的点。这样处理出的一定是合法的，因为数组中不存在比它还左的点。处理完后删掉这个点，这样第二个点就变成数组中最左的点了，对他处理出的解也一定是合法的。</p>
+<p>关于删掉点这个操作可以用双向链表来实现。</p>
+<p>考虑到元素没有重复的，也可以用set来实现。</p>
+<p>注意边界问题。（对于set，begin是在set中的，end是不在的，stl中很多区间都是左闭右开的）</p>
+<p>预处理完成后，我们现在已知任意一个点当A或B行驶时唯一会去的地方。这构成两条链。</p>
+<p>容易想到的一种简化方法是找循环节。我们可以把A行驶一次+B行驶一次打包成一个整体。</p>
+<p>想到这一步就已经可以开始打暴力了。需要注意的一个细节是在AB整体不能走后还要判断一次A能不能走。</p>
+<p>考虑怎么进行优化。由于是多次询问，我们浪费的时间主要在处理多次询问上，许多点的搜索是进行了多次的。类似求lca，应该想到可以用倍增来维护，大大降低时间复杂度。</p>
+<p>注意，倍增的基本单位是AB整体。</p>
+<p>初始化时定义以下倍增数组：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)f[i][<span class="number">0</span>] = aa[bb[i]]; <span class="comment">//f[i][j]表示从点i走2^j个循环节到的点</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)<span class="keyword">if</span>(bb[i])b[i][<span class="number">0</span>] = <span class="built_in">abs</span>(h[bb[i]]-h[i]);<span class="comment">//b[i][j]表示b从点i走2^j个循环节走的路程</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)<span class="keyword">if</span>(aa[i])a[i][<span class="number">0</span>] = <span class="built_in">abs</span>(h[bb[i]]-h[aa[bb[i]]]);<span class="comment">//a[i][j]表示a从点i走2^j个循环节走的路程</span></span><br></pre></td></tr></table></figure>
+<p>转移方程如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=<span class="number">19</span>;j++)</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		f[i][j] = f[f[i][j<span class="number">-1</span>]][j<span class="number">-1</span>];</span><br><span class="line">		a[i][j] = a[i][j<span class="number">-1</span>] + a[f[i][j<span class="number">-1</span>]][j<span class="number">-1</span>];</span><br><span class="line">		b[i][j] = b[i][j<span class="number">-1</span>] + b[f[i][j<span class="number">-1</span>]][j<span class="number">-1</span>];</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>完整代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">100005</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> h,id;</span><br><span class="line">	node(<span class="keyword">int</span> a=<span class="number">0</span>,<span class="keyword">int</span> b=<span class="number">0</span>)&#123;</span><br><span class="line">		id = a;h = b;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">bool</span> <span class="keyword">operator</span> &lt;(<span class="keyword">const</span> node x) <span class="keyword">const</span>&#123;</span><br><span class="line">	    <span class="keyword">return</span> h&lt;x.h;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span>&lt;node&gt; s;</span><br><span class="line"><span class="built_in">set</span>&lt;node&gt; ::iterator iter;</span><br><span class="line">node city[maxn];</span><br><span class="line"><span class="keyword">int</span> jl1,jl2;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> h[maxn];</span><br><span class="line"><span class="keyword">int</span> a[maxn][<span class="number">20</span>],b[maxn][<span class="number">20</span>],f[maxn][<span class="number">20</span>];</span><br><span class="line"><span class="keyword">int</span> aa[maxn],bb[maxn];</span><br><span class="line"><span class="built_in">map</span> &lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; ys;</span><br><span class="line"><span class="keyword">int</span> x0;</span><br><span class="line"></span><br><span class="line">pair &lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; tmp[<span class="number">7</span>];</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; a,pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; b)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(a.first==b.first)<span class="keyword">return</span> a.second&lt;b.second;</span><br><span class="line">	<span class="keyword">return</span> a.first&lt;b.first;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//b先行动. </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dp</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)f[i][<span class="number">0</span>] = aa[bb[i]];</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)<span class="keyword">if</span>(bb[i])b[i][<span class="number">0</span>] = <span class="built_in">abs</span>(h[bb[i]]-h[i]);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)<span class="keyword">if</span>(aa[i])a[i][<span class="number">0</span>] = <span class="built_in">abs</span>(h[bb[i]]-h[aa[bb[i]]]);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=<span class="number">19</span>;j++)</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		f[i][j] = f[f[i][j<span class="number">-1</span>]][j<span class="number">-1</span>];</span><br><span class="line">		a[i][j] = a[i][j<span class="number">-1</span>] + a[f[i][j<span class="number">-1</span>]][j<span class="number">-1</span>];</span><br><span class="line">		b[i][j] = b[i][j<span class="number">-1</span>] + b[f[i][j<span class="number">-1</span>]][j<span class="number">-1</span>];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">(<span class="keyword">int</span> s,<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> p=s;</span><br><span class="line">	<span class="keyword">int</span> x1=x;</span><br><span class="line">	jl1=jl2=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">19</span>;i&gt;=<span class="number">0</span>;i--)&#123;</span><br><span class="line">		<span class="keyword">if</span> (f[p][i]!=<span class="number">0</span>&amp;&amp;a[p][i]+b[p][i]&lt;=x1)&#123;</span><br><span class="line">			x1-=a[p][i]+b[p][i];jl1+=b[p][i];jl2+=a[p][i];p=f[p][i];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(bb[p]&amp;&amp;b[p][<span class="number">0</span>]&lt;=x1)jl1+=b[p][<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="built_in">cin</span>&gt;&gt;h[i];</span><br><span class="line">		city[i] = node(i,h[i]);</span><br><span class="line">		s.insert(node(i,h[i]));</span><br><span class="line">		ys[h[i]] = i;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		iter = s.find(city[i]);</span><br><span class="line">		<span class="keyword">int</span> t=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">if</span>(iter!=s.begin())&#123;</span><br><span class="line">			iter--;</span><br><span class="line">			tmp[++t] = make_pair(<span class="built_in">abs</span>((*iter).h-city[i].h),(*iter).</span><br><span class="line">			h);</span><br><span class="line">			<span class="keyword">if</span> (iter!=s.begin())&#123;</span><br><span class="line">				iter--;</span><br><span class="line">				tmp[++t] = make_pair(<span class="built_in">abs</span>((*iter).h-city[i].h),(*iter).h);iter++;</span><br><span class="line">			&#125;</span><br><span class="line">			iter++;</span><br><span class="line">		&#125;</span><br><span class="line">		iter++;</span><br><span class="line">		<span class="keyword">if</span>(iter!=s.end())&#123;</span><br><span class="line">			tmp[++t] = make_pair(<span class="built_in">abs</span>((*iter).h-city[i].h),(*iter).h);iter++;</span><br><span class="line">			<span class="keyword">if</span> (iter!=s.end())&#123;</span><br><span class="line">				tmp[++t] = make_pair(<span class="built_in">abs</span>((*iter).h-city[i].h),(*iter).h);</span><br><span class="line">			&#125;iter--;</span><br><span class="line">		&#125;iter--;</span><br><span class="line">		sort(tmp+<span class="number">1</span>,tmp+t+<span class="number">1</span>,cmp);</span><br><span class="line">		<span class="keyword">if</span>(t&gt;=<span class="number">1</span>)aa[i]=ys[tmp[<span class="number">1</span>].second];</span><br><span class="line">		<span class="keyword">if</span>(t&gt;=<span class="number">2</span>)bb[i]=ys[tmp[<span class="number">2</span>].second];</span><br><span class="line">		<span class="comment">//for (int i=1;i&lt;=t;i++)cout&lt;&lt;tmp[i].second&lt;&lt;endl;</span></span><br><span class="line">		<span class="comment">//cout&lt;&lt;endl&lt;&lt;endl;</span></span><br><span class="line">		s.erase(iter);</span><br><span class="line">	&#125;<span class="comment">/*</span></span><br><span class="line"><span class="comment">	for (int i=1;i&lt;=n;i++)&#123;</span></span><br><span class="line"><span class="comment">		</span></span><br><span class="line"><span class="comment">	&#125;*/</span></span><br><span class="line">	dp();</span><br><span class="line">	<span class="built_in">cin</span>&gt;&gt;x0;</span><br><span class="line">	<span class="keyword">double</span> now=<span class="number">2147483647</span>;</span><br><span class="line">	<span class="keyword">int</span> ans;</span><br><span class="line">	<span class="keyword">int</span> p;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> s=<span class="number">1</span>;s&lt;n;s++)&#123;</span><br><span class="line">		run(s,x0);</span><br><span class="line">		<span class="keyword">if</span>(jl2!=<span class="number">0</span>)</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">double</span>(jl1)/<span class="keyword">double</span>(jl2)&lt;=now+<span class="number">0.0000001</span>&amp;&amp;<span class="keyword">double</span>(jl1)/<span class="keyword">double</span>(jl2)&gt;=now<span class="number">-0.0000001</span>)</span><br><span class="line">			<span class="keyword">if</span>(h[ans]&lt;h[s])ans=s;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">double</span>(jl1)/<span class="keyword">double</span>(jl2)&lt;now)&#123;</span><br><span class="line">			ans=s;now=<span class="keyword">double</span>(jl1)/<span class="keyword">double</span>(jl2);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;ans&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">int</span> m,s0;</span><br><span class="line">	<span class="built_in">cin</span>&gt;&gt;m;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)&#123;</span><br><span class="line">		<span class="built_in">cin</span>&gt;&gt;s0&gt;&gt;x0;</span><br><span class="line">		run(s0,x0);</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;jl1&lt;&lt;<span class="string">" "</span>&lt;&lt;jl2&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/2018/10/20/基本算法/DP专题/棋盘DP/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Más nuevo</strong>
+            <div class="article-nav-title">
+                
+                    棋盘DP
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/10/20/题目/换教室/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Más viejo</strong>
+            <div class="article-nav-title">换教室</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            robin2333 &copy; 2018 
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png" /></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>
