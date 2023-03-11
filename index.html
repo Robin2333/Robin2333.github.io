@@ -1,0 +1,750 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="robin2333">
+  <meta name="keywords" content="">
+  
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Robin&#39;s Blog">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="Robin&#39;s Blog">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="robin2333">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Robin&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>robin2333</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="为了人类心智的荣耀"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          style="margin-top: 0">
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/01/12/%E6%9D%A5%E8%87%AA%E7%9F%A5%E4%B9%8E/DW%E5%88%86%E8%A7%A3%EF%BC%88Dantzig-Wolfe%20decomposition%EF%BC%89%E5%92%8Cbenders%E5%88%86%E8%A7%A3/" target="_self">
+          DW分解（Dantzig-Wolfe decomposition）和benders分解
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/12/%E6%9D%A5%E8%87%AA%E7%9F%A5%E4%B9%8E/DW%E5%88%86%E8%A7%A3%EF%BC%88Dantzig-Wolfe%20decomposition%EF%BC%89%E5%92%8Cbenders%E5%88%86%E8%A7%A3/" target="_self">
+        <div>
+          #! https://zhuanlan.zhihu.com/p/598626208 # DW分解（Dantzig-Wolfe decomposition）和benders分解 DW分解（Dantzig-Wolfe decomposition） 对于标准形式的线性规划，也就是 \[ \min c^T x \\     {s.t.}\left \{         \begin{array}{l}
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-01-12 20:30" pubdate>
+              2023-01-12
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E8%BF%90%E7%AD%B9%E5%AD%A6/">#运筹学</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/01/11/%E6%9D%A5%E8%87%AA%E7%9F%A5%E4%B9%8E/%E5%88%86%E6%94%AF%E5%AE%9A%E7%95%8C%E6%B3%95%E4%B8%8E%E5%88%86%E6%94%AF%E5%AE%9A%E4%BB%B7%E6%B3%95/" target="_self">
+          分支定界法与分支定价法
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/11/%E6%9D%A5%E8%87%AA%E7%9F%A5%E4%B9%8E/%E5%88%86%E6%94%AF%E5%AE%9A%E7%95%8C%E6%B3%95%E4%B8%8E%E5%88%86%E6%94%AF%E5%AE%9A%E4%BB%B7%E6%B3%95/" target="_self">
+        <div>
+          #! https://zhuanlan.zhihu.com/p/598134928 # 分支定界法与分支定价法 分支定界法（Branch and bound） 分支定界法一般用于解决整数线性规划和混合整数线性规划。它本质上是一种基于搜索的算法，是比较暴力的，并且在极坏情况下可能会退化成枚举。 对于如下混合整数线性规划问题 \[ \min_{x,y} f(x,y) \\     {s.t.}\lef
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-01-11 01:05" pubdate>
+              2023-01-11
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E8%BF%90%E7%AD%B9%E5%AD%A6/">#运筹学</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/01/10/%E6%9D%A5%E8%87%AA%E7%9F%A5%E4%B9%8E/%E5%89%B2%E5%B9%B3%E9%9D%A2%E6%B3%95%EF%BC%88%E8%A1%8C%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%EF%BC%89%E4%B8%8E%E5%88%97%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E4%BB%A5%E5%8F%8A%E5%AE%83%E4%BB%AC%E7%9A%84%E5%AF%B9%E5%81%B6%E6%80%A7/" target="_self">
+          割平面法（行生成算法）与列生成算法以及它们的对偶性
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/10/%E6%9D%A5%E8%87%AA%E7%9F%A5%E4%B9%8E/%E5%89%B2%E5%B9%B3%E9%9D%A2%E6%B3%95%EF%BC%88%E8%A1%8C%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%EF%BC%89%E4%B8%8E%E5%88%97%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E4%BB%A5%E5%8F%8A%E5%AE%83%E4%BB%AC%E7%9A%84%E5%AF%B9%E5%81%B6%E6%80%A7/" target="_self">
+        <div>
+          #! https://zhuanlan.zhihu.com/p/598065618 # 割平面法（行生成算法）与列生成算法以及它们的对偶性 在线性规划中，我们把变量称为“列”，把约束称为“行”。行生成和列生成算法大思路是一致的，都是由于原问题规模过大，所以需要把原问题“简化”一部分，不过这就导致丢失了部分信息，失去了最优性。因此我们就要以某种方式迭代的把简化掉的部分再添加回去一部分，直到得到最优解
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-01-10 20:20" pubdate>
+              2023-01-10
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E8%BF%90%E7%AD%B9%E5%AD%A6/">#运筹学</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/01/10/%E6%9D%A5%E8%87%AA%E7%9F%A5%E4%B9%8E/%E5%AF%B9%E5%81%B6%E9%97%AE%E9%A2%98/" target="_self">
+          从Lagrange对偶到线性规划对偶问题
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/10/%E6%9D%A5%E8%87%AA%E7%9F%A5%E4%B9%8E/%E5%AF%B9%E5%81%B6%E9%97%AE%E9%A2%98/" target="_self">
+        <div>
+          #! https://zhuanlan.zhihu.com/p/597492395 # 从Lagrange对偶到线性规划对偶问题 Lagrange对偶 我们熟悉Lagrange乘子法，它是求解带有等式约束的最值问题的方法，而Lagrange对偶函数可以理解为是它的一种拓展，它能解决带有等式和不等式约束的问题，也就是标准形式的优化问题。标准形式的优化问题形如 \[ \min f_0(x) \\
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-01-10 18:49" pubdate>
+              2023-01-10
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E8%BF%90%E7%AD%B9%E5%AD%A6/">#运筹学</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/01/10/%E6%9D%A5%E8%87%AA%E7%9F%A5%E4%B9%8E/%E5%BD%B1%E5%AD%90%E4%BB%B7%E6%A0%BC%E4%B8%8E%E5%88%86%E6%94%AF%E5%AE%9A%E4%BB%B7%E6%B3%95/" target="_self">
+          线性规划对偶问题、影子价格（shadow price）与单纯形法检验数（reduce cost）
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/10/%E6%9D%A5%E8%87%AA%E7%9F%A5%E4%B9%8E/%E5%BD%B1%E5%AD%90%E4%BB%B7%E6%A0%BC%E4%B8%8E%E5%88%86%E6%94%AF%E5%AE%9A%E4%BB%B7%E6%B3%95/" target="_self">
+        <div>
+          #! https://zhuanlan.zhihu.com/p/597955786 # 线性规划对偶问题、影子价格（shadow price）与单纯形法检验数（reduce cost） Lagrange对偶问题（包括线性规划对偶问题）实际上可以有一个经济学的解释（关于Lagrange对偶、线性规划对偶的数学推导可以看上一篇文章）。对于这样一个原问题 \[ \min f_0(x) \\     {s
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-01-10 18:48" pubdate>
+              2023-01-10
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E8%BF%90%E7%AD%B9%E5%AD%A6/">#运筹学</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/01/08/%E6%9D%A5%E8%87%AA%E7%9F%A5%E4%B9%8E/%E5%85%B1%E8%BD%AD%E5%87%BD%E6%95%B0/" target="_self">
+          共轭函数（Legendre变换与Fenchel变换）
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/08/%E6%9D%A5%E8%87%AA%E7%9F%A5%E4%B9%8E/%E5%85%B1%E8%BD%AD%E5%87%BD%E6%95%B0/" target="_self">
+        <div>
+          #! https://zhuanlan.zhihu.com/p/597399183 # 共轭函数（Legendre变换与Fenchel变换） Legendre变换是物理（力学，热力学），数学中常用的一种变换。它把可微凸函数从关于原自变量x的函数变为关于点导数（梯度）的函数。也就是如果记\(k=\dfrac{df}{dx}\)，那么把原函数\((x,f(x))\)变换为\((k,f^*(k))\)。
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-01-08 00:10" pubdate>
+              2023-01-08
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E8%BF%90%E7%AD%B9%E5%AD%A6/">#运筹学</a>
+            
+              <a href="/tags/%E6%95%B0%E5%AD%A6/">#数学</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/01/02/%E6%9D%A5%E8%87%AA%E7%9F%A5%E4%B9%8E/tsp%E7%AC%94%E8%AE%B0/" target="_self">
+          两种TSP问题（旅行推销员问题）的复杂性证明
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/02/%E6%9D%A5%E8%87%AA%E7%9F%A5%E4%B9%8E/tsp%E7%AC%94%E8%AE%B0/" target="_self">
+        <div>
+          #! https://zhuanlan.zhihu.com/p/596106342 # 两种TSP问题（旅行推销员问题）的复杂性证明 我们平时说的TSP问题实际上有两种，一种是原始版本，我们称之为tour-TSP。它要求从某个点出发，经过每个点一次，然后再回到原点。另一种是变种path-TSP，它使得可以从任意点出发，并且经过每个点一次，最终不需要回到原点。实际上可以证明这两个问题有相似的复杂性。
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-01-02 23:47" pubdate>
+              2023-01-02
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E8%BF%90%E7%AD%B9%E5%AD%A6/">#运筹学</a>
+            
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E5%A4%8D%E6%9D%82%E6%80%A7%E7%90%86%E8%AE%BA/">#计算复杂性理论</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2018/10/25/%E5%9B%BE%E8%AE%BA/%E6%B1%82%E6%AC%A1%E7%9F%AD%E8%B7%AF/" target="_self">
+          求次短路
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2018/10/25/%E5%9B%BE%E8%AE%BA/%E6%B1%82%E6%AC%A1%E7%9F%AD%E8%B7%AF/" target="_self">
+        <div>
+          求次短路 很好想，在spfa的基础上添加一个数组即可，就是转移的时候要注意。 1234567891011121314151617181920212223242526void spfa(int u)&#123;	for(int i=1;i&lt;=n;i++)&#123;		d[i]=inf;d2[i]=inf;	&#125;	d[u] = 0;	q.push(u);	while(!q.empty(
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-10-25 16:51" pubdate>
+              2018-10-25
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/OI/">#OI</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2018/10/23/%E9%A2%98%E7%9B%AE/USACO%E9%A2%98%E7%9B%AE/" target="_self">
+          USACO题目
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2018/10/23/%E9%A2%98%E7%9B%AE/USACO%E9%A2%98%E7%9B%AE/" target="_self">
+        <div>
+          T1：贪婪地送礼者 枚举每个人，把钱送出去就好了，然后统计答案即可。 T2： [USACO1.1]黑色星期五Friday the Thirteenth  13号又是一个星期五。13号在星期五比在其他日子少吗?为了回答这个问题,写一个程序，要求计算每个月的十三号落在周一到周日的次数。给出N年的一个周期，要求计算1900年1月1日至1900+N-1年12月31日中十三号落在周一到周日的次数，N为正整数
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-10-23 18:42" pubdate>
+              2018-10-23
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2018/10/20/%E9%A2%98%E7%9B%AE/NOIP2012%E5%BC%80%E8%BD%A6%E6%97%85%E8%A1%8C/" target="_self">
+          NOIP2012 开车旅行
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2018/10/20/%E9%A2%98%E7%9B%AE/NOIP2012%E5%BC%80%E8%BD%A6%E6%97%85%E8%A1%8C/" target="_self">
+        <div>
+          拿到这道题应该很容易想到排序。关键是如何处理排序之后原序中只能往右走这个信息。 考虑这样做，在排序好的数组中，离一个点i最近和次进的一定在i-1,i-2,i+1,i+2中。只用处理这四个即可。问题是如何使序合法。 有一种优雅的解法是在排好序的数组中找到原序为1的点，处理好离他最近和次近的点。这样处理出的一定是合法的，因为数组中不存在比它还左的点。处理完后删掉这个点，这样第二个点就变成数组中最左的点
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-10-20 00:00" pubdate>
+              2018-10-20
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/OI/">#OI</a>
+            
+              <a href="/tags/%E5%9B%BE%E8%AE%BA/">#图论</a>
+            
+              <a href="/tags/%E6%8E%92%E5%BA%8F/">#排序</a>
+            
+              <a href="/tags/%E5%80%8D%E5%A2%9E/">#倍增</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

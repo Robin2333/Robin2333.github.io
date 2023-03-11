@@ -1,0 +1,798 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="robin2333">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="#! https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;597955786 # 线性规划对偶问题、影子价格（shadow price）与单纯形法检验数（reduce cost） Lagrange对偶问题（包括线性规划对偶问题）实际上可以有一个经济学的解释（关于Lagrange对偶、线性规划对偶的数学推导可以看上一篇文章）。对于这样一个原问题 \[ \min f_0(x) \\     {s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线性规划对偶问题、影子价格（shadow price）与单纯形法检验数（reduce cost）">
+<meta property="og:url" content="http://example.com/2023/01/10/%E6%9D%A5%E8%87%AA%E7%9F%A5%E4%B9%8E/%E5%BD%B1%E5%AD%90%E4%BB%B7%E6%A0%BC%E4%B8%8E%E5%88%86%E6%94%AF%E5%AE%9A%E4%BB%B7%E6%B3%95/index.html">
+<meta property="og:site_name" content="Robin&#39;s Blog">
+<meta property="og:description" content="#! https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;597955786 # 线性规划对偶问题、影子价格（shadow price）与单纯形法检验数（reduce cost） Lagrange对偶问题（包括线性规划对偶问题）实际上可以有一个经济学的解释（关于Lagrange对偶、线性规划对偶的数学推导可以看上一篇文章）。对于这样一个原问题 \[ \min f_0(x) \\     {s">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-01-10T10:48:00.000Z">
+<meta property="article:modified_time" content="2023-03-11T17:49:42.274Z">
+<meta property="article:author" content="robin2333">
+<meta property="article:tag" content="运筹学">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>线性规划对偶问题、影子价格（shadow price）与单纯形法检验数（reduce cost） - Robin&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>robin2333</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="线性规划对偶问题、影子价格（shadow price）与单纯形法检验数（reduce cost）"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-01-10 18:48" pubdate>
+          2023年1月10日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          21 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">线性规划对偶问题、影子价格（shadow price）与单纯形法检验数（reduce cost）</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>#! https://zhuanlan.zhihu.com/p/597955786 #
+线性规划对偶问题、影子价格（shadow price）与单纯形法检验数（reduce
+cost）</p>
+<p>Lagrange对偶问题（包括线性规划对偶问题）实际上可以有一个经济学的解释（关于Lagrange对偶、线性规划对偶的数学推导可以看上一篇文章）。对于这样一个原问题</p>
+<p><span class="math display">\[
+\min f_0(x) \\
+    {s.t.}
+        \begin{array}{l}
+            f_i(x) \le 0,i=1,\dots,m
+        \end{array}
+\]</span></p>
+<p>可以把x理解为公式的某种经营策略，那么<span
+class="math inline">\(f_0(x)\)</span>表示这种经营策略下的成本。而<span
+class="math inline">\(f_i(x)\le
+0\)</span>表示某种限制，比如公司的劳动力上限，仓库容量上限等等。那么这个优化问题就是找到最好的经营策略，它的成本最小。或者说利润最高。</p>
+<p>接下来考虑另一种情况，约束是可以被违背的，但是对违背的部分有一些惩罚，或者说额外成本，与违背的部分成线性关系。即约束i被违背的部分<span
+class="math inline">\(f_i(x)\)</span>带来的成本为<span
+class="math inline">\(\lambda_if_i(x)\)</span>。相应的，如果约束不是紧的，公式会因此得到收益。即当<span
+class="math inline">\(f_i(x)&lt;0\)</span>，带来的成本是个负数（也就是获得收益）。系数<span
+class="math inline">\(\lambda_i\)</span>的含义是违背<span
+class="math inline">\(f_i\)</span>的价格。</p>
+<p>在这种情况下，以x的方式运营，约束价格为<span
+class="math inline">\(\lambda\)</span>，公司的总成本就为<span
+class="math inline">\(L(x,\lambda)=f_0(x)+\sum_{i=1}^m \lambda_i
+f_i(x)\)</span>，这就是Lagrange函数。公式当然会选择最好的经营策略，使得成本最小，也就是<span
+class="math inline">\(g(\lambda) = \inf_x
+L(x,\lambda)\)</span>，这就是Lagrange对偶函数。同时基于这种解释，也很好理解<span
+class="math inline">\(d^*\le
+p^*\)</span>，因为在这个情况下公式实际上有了更多的选择，出售多余的约束，而购入需要的约束。</p>
+<p>现在假设强对偶性成立（比如线性规划的情形），对偶问题的最优解<span
+class="math inline">\(\lambda^*\)</span>可以看作这样的价格：在这个价格下，允许以这样的价格支付被违背的约束（或是通过不紧的约束获得收益）相比约束不能被违背时没有任何优势。实际上<span
+class="math inline">\(\lambda^*\)</span>就是原问题的<strong>影子价格</strong>。</p>
+<p>影子价格的通常定义表述为：当限制条件放宽一个单位之后，最适解决方案的真实价值的变化。可以看到这个定义和我们前面的描述是相容的。它反映了最优情况下资源的边际价值。</p>
+<h2 id="单纯形法检验数">单纯形法检验数</h2>
+<p>在线性规划中，其实影子价格还与单纯形法的检验数有密切的联系。</p>
+<h3 id="单纯形算法角度">单纯形算法角度</h3>
+<p>回忆一下单纯形法的步骤，根据线性规划基本定理，线性规划的最优解一定在顶点出现。而单纯形法给出了一个好的寻找最优顶点的算法，具体地，它是一种基于迭代的算法，每次根据检验数来选择一个入基出基变量。下面我们来具体描述一下关于检验数的部分。</p>
+<p>对于这样一个标准形式的线性规划</p>
+<p><span class="math display">\[
+\min c^T x \\
+    {s.t.}\left \{
+        \begin{array}{l}
+            Ax = b\\
+            x\ge 0
+        \end{array}
+        \right.
+\]</span></p>
+<p>我们把变量x拆分成基变量和非基变量（等于0的变量）</p>
+<p><span class="math display">\[
+x=\left[\begin{array}{l}
+x_B \\
+x_N
+\end{array}\right]
+\]</span></p>
+<p>其中<span class="math inline">\(x_B \in R^m\)</span>是基变量，<span
+class="math inline">\(x_N \in R^{(n-m)}\)</span>是非基变量。</p>
+<p>那么原问题就可以写成</p>
+<p><span class="math display">\[
+\min c_B^T x_B + c^T_Nx_N \\
+    {s.t.}\left \{
+        \begin{array}{l}
+            Bx_B + Nx_N = b\\
+            x_B\ge 0,x_N\ge 0
+        \end{array}
+        \right.
+\]</span></p>
+<p>根据约束我们有</p>
+<p><span class="math display">\[
+x_B = B^{-1}b-B^{-1}Nx_N
+\]</span></p>
+<p>注意这里取B的逆是不会出问题的，因为B是满秩的。我们要找到一个新解<span
+class="math inline">\(x&#39;\)</span></p>
+<p><span class="math display">\[
+x&#39; = x + \theta d
+\]</span></p>
+<p>由于<span class="math inline">\(x&#39;\)</span>应该是<span
+class="math inline">\(x\)</span>的相邻顶点，所以我们实际上是在非集变量中找到一个入基变量<span
+class="math inline">\(x_j\)</span>，那么<span
+class="math inline">\(d\)</span>中与非基变量对应的除了<span
+class="math inline">\(d_j\neq 0\)</span>外，其它分量都为0。</p>
+<p>又因为新解<span
+class="math inline">\(x&#39;\)</span>也应当满足约束，所以有<span
+class="math inline">\(A(x+\theta
+d)=b\)</span>，我们知道x是可行解，所以<span
+class="math inline">\(Ax=b\)</span>，那么<span
+class="math inline">\(Ad=0\)</span>，因此</p>
+<p><span class="math display">\[
+0 = Ad = Bd_B + A_j
+\]</span></p>
+<p>所以可以导出基可行方向为</p>
+<p><span class="math display">\[
+d_B = -B^{-1}A_j
+\]</span></p>
+<p>沿着这个可行方向，我们可以算出目标函数的变化量，通常情况下是减少量（因为我们会去可以选择使目标函数减少的入基变量）</p>
+<p><span class="math display">\[
+\Delta = c^Td = c^Td_B + c_j = c_j - c_B^TB^{-1}A_j
+\]</span></p>
+<p>这个数在单纯形法中也被成为检验数。它实际上表示沿着某个可行方向，移动一个单位时目标函数的减少量。</p>
+<h3 id="对偶问题与影子价格角度">对偶问题与影子价格角度</h3>
+<p>对于原问题，我们熟知它的对偶问题为</p>
+<p><span class="math display">\[
+\max -b^Tv \\
+    {s.t.}
+        \begin{array}{l}
+            A^Tv+c\ge0\\
+        \end{array}
+\]</span></p>
+<p>当我们给原问题约束右侧的<span
+class="math inline">\(b\)</span>做出一点调整，调整为<span
+class="math inline">\(b+d\)</span>时。由于非退化情况下原问题满足<span
+class="math inline">\(x_B =
+B^{-1}b&gt;0\)</span>，由于调整是可以很细微的，所以我们可以找到<span
+class="math inline">\(B(b+d)&gt;0\)</span>。</p>
+<p>由强对偶理论我们知道调整后也有<span class="math inline">\(p^* =
+d^*\)</span>，也就是</p>
+<p><span class="math display">\[
+c_B^T B^{-1} (b+d) = -v^T(b+d)
+\]</span></p>
+<p>得到对偶问题的最优解<span class="math inline">\(v^T =
+-c_B^TB^{-1}\)</span>。</p>
+<p>注意到检验数中也出现了这个结构。它们都是考察作出某种单位变化后对目标函数的影相值，而入基出基操作在某种程度上也可以和调整<span
+class="math inline">\(b\)</span>联系起来。</p>
+<p>另外，这也给出了一种求解单纯形法检验数的方法--我们可以通过求解对偶问题来间接的求解单纯形法检验数。在规模很大的时候求解<span
+class="math inline">\(B\)</span>的逆并不是一件容易的事情，而求解对偶问题可能更简单一些。我们将在讲解列生成算法的时候更深入的分析这个问题。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%BF%90%E7%AD%B9%E5%AD%A6/">#运筹学</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>线性规划对偶问题、影子价格（shadow price）与单纯形法检验数（reduce cost）</div>
+      <div>http://example.com/2023/01/10/来自知乎/影子价格与分支定价法/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>robin2333</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年1月10日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/01/10/%E6%9D%A5%E8%87%AA%E7%9F%A5%E4%B9%8E/%E5%AF%B9%E5%81%B6%E9%97%AE%E9%A2%98/" title="从Lagrange对偶到线性规划对偶问题">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">从Lagrange对偶到线性规划对偶问题</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/01/08/%E6%9D%A5%E8%87%AA%E7%9F%A5%E4%B9%8E/%E5%85%B1%E8%BD%AD%E5%87%BD%E6%95%B0/" title="共轭函数（Legendre变换与Fenchel变换）">
+                        <span class="hidden-mobile">共轭函数（Legendre变换与Fenchel变换）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,812 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="robin2333">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="#! https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;598626208 # DW分解（Dantzig-Wolfe decomposition）和benders分解 DW分解（Dantzig-Wolfe decomposition） 对于标准形式的线性规划，也就是 \[ \min c^T x \\     {s.t.}\left \{         \begin{array}{l}">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DW分解（Dantzig-Wolfe decomposition）和benders分解">
+<meta property="og:url" content="http://example.com/2023/01/12/%E6%9D%A5%E8%87%AA%E7%9F%A5%E4%B9%8E/DW%E5%88%86%E8%A7%A3%EF%BC%88Dantzig-Wolfe%20decomposition%EF%BC%89%E5%92%8Cbenders%E5%88%86%E8%A7%A3/index.html">
+<meta property="og:site_name" content="Robin&#39;s Blog">
+<meta property="og:description" content="#! https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;598626208 # DW分解（Dantzig-Wolfe decomposition）和benders分解 DW分解（Dantzig-Wolfe decomposition） 对于标准形式的线性规划，也就是 \[ \min c^T x \\     {s.t.}\left \{         \begin{array}{l}">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-01-12T12:30:00.000Z">
+<meta property="article:modified_time" content="2023-03-11T17:50:28.868Z">
+<meta property="article:author" content="robin2333">
+<meta property="article:tag" content="运筹学">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>DW分解（Dantzig-Wolfe decomposition）和benders分解 - Robin&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>robin2333</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="DW分解（Dantzig-Wolfe decomposition）和benders分解"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-01-12 20:30" pubdate>
+          2023年1月12日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          26 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">DW分解（Dantzig-Wolfe decomposition）和benders分解</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>#! https://zhuanlan.zhihu.com/p/598626208 # DW分解（Dantzig-Wolfe
+decomposition）和benders分解</p>
+<h2 id="dw分解dantzig-wolfe-decomposition">DW分解（Dantzig-Wolfe
+decomposition）</h2>
+<p>对于标准形式的线性规划，也就是</p>
+<p><span class="math display">\[
+\min c^T x \\
+    {s.t.}\left \{
+        \begin{array}{l}
+            Ax = b\\
+            x\ge 0
+        \end{array}
+        \right.
+\]</span></p>
+<p>如果矩阵<span
+class="math inline">\(A\)</span>存在一些特点，是有助于我们解决问题的。特别的，如果矩阵形如</p>
+<figure>
+<img
+src="images/cb29a30ca926c601546aad8c85e0f2be181a3464773689f5da8aa0015030b268.png" srcset="/img/loading.gif" lazyload
+alt="矩阵形式" />
+<figcaption aria-hidden="true">矩阵形式</figcaption>
+</figure>
+<p>也就是存在大量“整块儿”的零矩阵。在这种情况下问题可以写为</p>
+<p><span class="math display">\[
+\min c_1^T x_1 + c_2^T x_2 \\
+    {s.t.}\left \{
+        \begin{array}{l}
+            D_1x_1 + D_2x_2 = b_0\\
+            F_1x_1 = b_1\\
+            F_2x_2 = b_2\\
+            x_1,x_2\ge 0
+        \end{array}
+        \right.
+\]</span></p>
+<p>其中<span class="math inline">\(b_0 \in R^{m_0}\)</span>，<span
+class="math inline">\(b_1 \in R^{m_1}\)</span>，<span
+class="math inline">\(b_2\in R^{m_2}\)</span>。如果<span
+class="math inline">\(m_1,m_2 \gg
+m_0\)</span>，也就是零矩阵的区域非常大，我们可以使用DW分解来高效的求解。它的本质是利用多面体表示定理（Minkowski
+Resolution Theorem），把<span class="math inline">\(x_1\)</span>和<span
+class="math inline">\(x_2\)</span>分别进行表示，这样可以转化掉<span
+class="math inline">\(F_1x_1=b_1\)</span>和<span
+class="math inline">\(F_2x_2=b_2\)</span>这两个约束。但是会引入非常多新的变量。具体的</p>
+<p>对于多面体（此处其实是超平面）</p>
+<p><span class="math display">\[
+\Omega_i  = \{x|F_ix = b_i\}
+\]</span></p>
+<p>我们可以利用Minkowski Resolution
+Theorem，也就是多面体表示定理，把<span
+class="math inline">\(x_1,x_2\)</span>利用多面体的极点和极线表示出来</p>
+<p><span class="math display">\[
+x_i = \sum_{p^j \in P_{i}} \lambda_i^jp^j + \sum_{r^k\in R_i}
+\theta_i^kr^k,\quad \sum_{p^j \in P_{i}} \lambda_i^j = 1
+\]</span></p>
+<p>其中<span class="math inline">\(P_i\)</span>是多面体<span
+class="math inline">\(\Omega_i\)</span>的极点集，<span
+class="math inline">\(R_i\)</span>是多面体<span
+class="math inline">\(\Omega_i\)</span>的极线集。基于此，就能写出分解后问题</p>
+<p><span class="math display">\[
+\min c_1^T(\sum_{p^j \in P_{1}} \lambda_1^jp^j + \sum_{r^k\in R_1}
+\theta_1^kr^k) + c_2^T (\sum_{p^j \in P_{2}} \lambda_2^jp^j +
+\sum_{r^k\in R_2} \theta_2^kr^k)  \\
+    {s.t.}\left \{
+        \begin{array}{l}
+            D_1(\sum_{p^j \in P_{1}} \lambda_1^jp^j + \sum_{r^k\in R_1}
+\theta_1^kr^k) + D_2(\sum_{p^j \in P_{2}} \lambda_2^jp^j + \sum_{r^k\in
+R_2} \theta_2^kr^k) = b_0\\
+            \sum_{p^j \in P_{i}} \lambda_i^j = 1, \ i=1,2\\
+            \lambda_i^j,\theta_i^k\ge 0
+        \end{array}
+        \right.
+\]</span></p>
+<p>注意到这个问题变的只有<span
+class="math inline">\(m_0+2\)</span>个等式约束。当然相应的，变量多了很多。我们知道对于这种问题，使用列生成算法是一个很好的方案。</p>
+<p>当然，这种方式是可以推广的。首先，它不仅可以处理这种把矩阵分解成两块的情况，更多块也是可以的，也就是把原问题分解成</p>
+<p><span class="math display">\[
+\min \sum_i c_i^T x_i \\
+    {s.t.}\left \{
+        \begin{array}{l}
+            \sum_i D_ix_i = b_0\\
+            F_ix_i = b_i\\
+            x_i\ge 0
+        \end{array}
+        \right.
+\]</span></p>
+<p>另一方面，它不止能处理等式情况，实际上只要相应集合是可以写成多面体的形式，就可以使用此方法。</p>
+<h2 id="benders分解">benders分解</h2>
+<p>DW分解是利用列生成的方式对问题进行分解，对偶的，benders分解利用行生成的方式解决问题。实际上，benders分解和DW分解某种程度上也存在一种对偶性。</p>
+<p>考虑问题P</p>
+<p><span class="math display">\[
+\min f(x,y) \\
+    {s.t.}\left \{
+        \begin{array}{l}
+            G(x,y) \ge 0  \\
+            x\in X,y\in Y (X\subseteq R^{n_1},Y\subseteq R^{n_2})
+        \end{array}
+        \right.
+\]</span></p>
+<p>其中，x为普通变量，y为特殊变量，一般为比x更复杂的变量。比如常见的x为普通变量，y为整数变量。</p>
+<p>当y被暂时的固定下来时，问题P就可以被分解为独立的子问题，这些问题可以被并行求解。并且由于这些子问题只包含普通变量，它们是好求解的；甚至可以被reduce到已有的问题（背包问题、最短路问题、普通线性规划）。这两此决策往往是上下层的关系。</p>
+<p>基于这个思想，我们可以把问题重写为 <span class="math display">\[
+        \min_y\ [\min_x f(x,y)\ s.t. G(x,y) \ge 0 , x\in X]\\
+        s.t.\ y\in Y\cap V
+\]</span> 或者说，更清晰的 <span class="math display">\[
+        \min_y\ v(y)\\
+        s.t.\ y\in Y\cap V
+\]</span></p>
+<p>其中<span class="math inline">\(v(y)=\min_x f(x,y)\ s.t. G(x,y) \ge 0
+, x\in X\)</span>，<span class="math inline">\(Y = \{y:G(x,y)\ge 0\ for
+\ some \ x \in X \}\)</span></p>
+<p>在传统的Benders分解中，要求<span
+class="math inline">\(v(y)\)</span>是一个线性规划问题。</p>
+<p>如果我们假设子问题<span
+class="math inline">\(v(y)\)</span>是一个线性规划问题，也就是 <span
+class="math display">\[
+    v(y) = \min_{x\in X} f(x,y) = \min_{x\in X} c^T x + \psi(y)\\
+    s.t. \ G(x,y) = Ax + g(y) + b \ge 0,x\ge 0
+\]</span></p>
+<p>写出它的对偶问题 <span class="math display">\[
+    v(y) = \max_{u\ge0} \psi(y) - u^T g(y) - u^T b\\
+    s.t. \ c^T - u^T A \ge 0,u\ge 0
+\]</span></p>
+<p>注意一些对偶问题的性质：对偶问题的任意目标值是原问题任意目标值的下界（这也是要取对偶问题的关键之一）；对偶问题无界-&gt;原问题无解。</p>
+<p>考虑对偶问题的极值点集<span
+class="math inline">\(\Omega_p\)</span>和极值束集<span
+class="math inline">\(\Omega_r\)</span> 对于极值点集，我们有 <span
+class="math display">\[
+    v(y) \ge \psi(y) - u^T (g(y)+b),\forall u \in \Omega_p
+\]</span> 对于极值束集，当<span class="math inline">\(u\in
+\Omega_r\)</span>，对偶问题无界，原问题无解。 到此为止，主问题<span
+class="math inline">\(\min_{y\in Y}
+v(y)\)</span>就可以写成关于y的带大量约束的问题，其中约束包括种 <span
+class="math display">\[
+      v(y) \ge \psi(y) - u^T (g(y)+b) , \forall u\in \Omega_p \quad
+最优性约束\\
+    - u^T (g(y)+b) \le 0, \forall u \in \Omega_r \quad 可行性约束
+\]</span></p>
+<p>现在我们把原问题转化成了一个含有大量约束的问题，不过问题中不再含有x了。一个非常有用的洞见是绝大多数约束都是不起作用的，只需要找到起作用的约束即可因此我们考虑把这些约束全部松弛掉，然后慢慢加入约束来得到可行解。我们称这个松弛问题为RMP。</p>
+<p>求解RMP，得到<span class="math inline">\(\bar{y}\)</span>和<span
+class="math inline">\(v(\bar{y})\)</span>，如果子问题有界，且目标函数值小于等于<span
+class="math inline">\(v(\bar{y})\)</span>，这就得到了最优解。若目标函数值大于<span
+class="math inline">\(v(\bar{y})\)</span>，则添加最优性约束。若子问题无界，则添加可行性约束。</p>
+<p>考虑子问题不是线性规划的形式，我们也可以借用Benders分解的思想。比如使用logit
+cut来割平面，或使用梯度（次梯度）来近似等。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%BF%90%E7%AD%B9%E5%AD%A6/">#运筹学</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>DW分解（Dantzig-Wolfe decomposition）和benders分解</div>
+      <div>http://example.com/2023/01/12/来自知乎/DW分解（Dantzig-Wolfe decomposition）和benders分解/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>robin2333</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年1月12日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/01/11/%E6%9D%A5%E8%87%AA%E7%9F%A5%E4%B9%8E/%E5%88%86%E6%94%AF%E5%AE%9A%E7%95%8C%E6%B3%95%E4%B8%8E%E5%88%86%E6%94%AF%E5%AE%9A%E4%BB%B7%E6%B3%95/" title="分支定界法与分支定价法">
+                        <span class="hidden-mobile">分支定界法与分支定价法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
